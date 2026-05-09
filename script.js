@@ -57,11 +57,37 @@ const irregulars = new Map([
 ]);
 const suffixes = ['ungsweise','ungsgemaess','ungen','ung','heiten','heit','keiten','keit','schaften','schaft','lichen','lichem','licher','liches','liche','lich','ischen','ischem','ischer','isches','ische','isch','enden','endem','ender','endes','ende','end','igsten','igster','igstem','igstes','igste','igst','ige','igen','igem','iger','iges','ig','test','tet','ten','te','sten','ster','stem','stes','ste','st','est','et','en','em','er','es','e','n','t'];
 function umlautBack(s) { return s.replace(/ae/g,'a').replace(/oe/g,'o').replace(/ue/g,'u').replace(/ss/g,'s'); }
-function checkStem(stem) { if (stem.length < 2) return false; if (wordSet.has(stem)) return true; const d = umlautBack(stem); return d !== stem && wordSet.has(d); }
+function checkStem(stem) {
+  if (stem.length < 2) return false;
+  if (wordSet.has(stem)) return true;
+  if (wordSet.has(stem + 'en')) return true;
+  if (wordSet.has(stem + 'n')) return true;
+  const d = umlautBack(stem);
+  if (d !== stem) {
+    if (wordSet.has(d)) return true;
+    if (wordSet.has(d + 'en')) return true;
+    if (wordSet.has(d + 'n')) return true;
+  }
+  return false;
+}
 function isAllowed(rawWord) { const word = rawWord.toLowerCase(); if (!word) return false; const lemma = irregulars.get(word); if (lemma !== undefined) return wordSet.has(lemma); if (wordSet.has(word)) return true; for (const s of suffixes) { if (word.endsWith(s) && word.length - s.length >= 2) { if (checkStem(word.slice(0, -s.length))) return true; } } const d = umlautBack(word); return d !== word && wordSet.has(d); }
 function escapeHtml(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
-function render() { const tokens = input.value.match(/[a-zA-ZaouAOUssäöüÄÖÜß]+|[^a-zA-ZäöüÄÖÜß]+/g) || []; let ok = 0, bad = 0, html = ''; for (const token of tokens) { if (/[a-zA-ZäöüÄÖÜß]/.test(token)) { if (isAllowed(token)) { ok++; html += '<mark class="ok">' + escapeHtml(token) + '</mark>'; } else { bad++; html += '<mark class="bad">' + escapeHtml(token) + '</mark>'; } } else { html += escapeHtml(token); } } backdrop.innerHTML = html + '\n'; backdrop.scrollTop = input.scrollTop; countOk.textContent = ok; countBad.textContent = bad; }
+function render() { const tokens = input.value.match(/[a-zA-ZäöüÄÖÜß]+|[^a-zA-ZäöüÄÖÜß]+/g) || []; let ok = 0, bad = 0, html = ''; for (const token of tokens) { if (/[a-zA-ZäöüÄÖÜß]/.test(token)) { if (isAllowed(token)) { ok++; html += '<mark class="ok">' + escapeHtml(token) + '</mark>'; } else { bad++; html += '<mark class="bad">' + escapeHtml(token) + '</mark>'; } } else { html += escapeHtml(token); } } backdrop.innerHTML = html + '\n'; backdrop.scrollTop = input.scrollTop; countOk.textContent = ok; countBad.textContent = bad; }
 input.addEventListener('input', render);
 input.addEventListener('scroll', () => { backdrop.scrollTop = input.scrollTop; });
 fetch('words.json').then(r => r.json()).then(words => { wordSet = new Set(words); render(); });
 if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js');
+
+document.getElementById('btnWordlist').addEventListener('click', () => {
+  const modal = document.getElementById('wordlistModal');
+  const content = document.getElementById('wordlistContent');
+  const sorted = [...wordSet].sort((a, b) => a.localeCompare(b, 'de'));
+  content.innerHTML = sorted.map(w => '<span class="wl-word">' + escapeHtml(w) + '</span>').join('');
+  modal.hidden = false;
+});
+document.getElementById('closeWordlist').addEventListener('click', () => {
+  document.getElementById('wordlistModal').hidden = true;
+});
+document.getElementById('wordlistModal').addEventListener('click', e => {
+  if (e.target === e.currentTarget) e.currentTarget.hidden = true;
+});
