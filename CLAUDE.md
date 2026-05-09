@@ -34,18 +34,28 @@ Workflow: .github/workflows/pages.yml
 
 Alternativ manuell per FTP: index.html, style.css, script.js, words.json, manifest.json, sw.js
 
-## Morphologie (script.js)
-Die `isAllowed`-Funktion prueft ein Wort in dieser Reihenfolge:
+## Wortliste
+words.json ist ein einfaches JSON-Array mit 1.098 Lemmas (Grundformen).
+
+**Philosophie**: Munroes Simple English – nur die häufigsten, alltäglichsten deutschen Wörter. Keine Anglizismen, keine akademischen Begriffe.
+
+**Quelle**: FrequencyWords (hermitdave/de_50k.txt) – Untertitel-basiert, reflektiert gesprochene Sprache.
+
+**Wartung & Nachjustierung**: → siehe `docs/WORTLISTE.md`
+
+**Die `isAllowed`-Funktion** (script.js) prüft ein Wort in dieser Reihenfolge:
 1. Irregular-Tabelle (z.B. "war" → "sein")
 2. Direkter Treffer im wordSet
 3. Suffix-Stripping: Endung abschneiden, Stamm pruefen
    - `checkStem` sucht auch nach `stem + "en"` und `stem + "n"` → erkennt Verbflexionen wenn Infinitiv in der Liste steht
-4. Umlaut-Normalisierung (ae→a, oe→o, ue→u, ss→s)
+4. ge-Praefix (Partizipien II): `gelacht` → `lacht` → `lachen`
+5. Umlaut-Normalisierung (ä→a, ö→o, ü→u, ß→s + ASCII ae/oe/ue/ss)
 
-## Wortliste erweitern
-words.json ist ein einfaches JSON-Array. Neue Lemmas lowercase hinzufuegen.
-Die isAllowed-Funktion uebernimmt Flexionsformen automatisch.
-Farben, haeufige Adjektive, Verben und Nomen sind bereits enthalten.
+**Neue Wörter hinzufuegen**: `words.json` öffnen, ein Lemma pro Zeile (lowercase), speichern. Flexionsformen werden automatisch erkannt.
+
+## Testen
+- **Manuell**: `python3 -m http.server`, dann http://localhost:8000 — Text eingeben, gruen/rot Markierung pruefen
+- **Automatisiert**: `node test.mjs` — 55 Tests (Datenintegrität, Morphologie, Unicode-Umlaute)
 
 <!-- SPECKIT START -->
 For additional context about technologies to be used, project structure,

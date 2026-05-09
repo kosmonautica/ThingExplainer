@@ -1,7 +1,7 @@
 # Thing Explainer - Anforderungen
 
 ## 1. Projektuebersicht
-Thing Explainer ist eine mobile-first PWA inspiriert von Randall Munroes Buch Thing Explainer. Spielende erklaeren Begriffe ausschliesslich mit den 1000 haeufigsten deutschen Woertern. Die App prueft den Text in Echtzeit.
+Thing Explainer ist eine mobile-first PWA inspiriert von Randall Munroes Buch *Thing Explainer*. Spielende erklaeren Begriffe ausschliesslich mit den ~1.000 haeufigsten, alltaeglichsten deutschen Woertern (nach Munroe-Philosophie: keine Anglizismen, keine akademischen Begriffe). Die App prueft den Text in Echtzeit und erkennt Flexionsformen automatisch.
 
 ## 2. Workshop-Spielablauf
 1. Moderator nennt einen Begriff verbal

@@ -30,13 +30,24 @@ Kein Login, kein Server, kein Sync — laeuft komplett im Browser.
 
 ## Wortliste
 
-Enthält die häufigsten deutschen Wörter als Lemmas (Grundformen), darunter:
-- Funktionswörter, Pronomen, Präpositionen
-- Häufige Verben (inkl. Modalverben und Unregelmässige)
-- Adjektive inkl. aller Farben
-- Alltagsnomen (Menschen, Orte, Gegenstände, Gefühle ...)
+**1.098 deutsche Lemmas (Grundformen)** nach der Munroe-Philosophie:
 
-Flexionsformen (Konjugation, Deklination, Komparation) werden automatisch auf die Grundform zurueckgefuehrt.
+- **Häufigkeitsbasiert**: Aus Untertitel-Korpora (alltägliche, gesprochene Sprache)
+- **Keine Anglizismen**: Kein Computer, Internet, App, Team, Job, etc.
+- **Keine akademischen Begriffe**: Fokus auf Konkretheit (Haus, Farbe, Gefühl) statt Abstraktion (Kompetenz, Struktur, Prozess)
+- **Inhalt**:
+  - Funktionswörter, Pronomen, Präpositionen
+  - Häufige Verben (inkl. Modalverben und Unregelmässige: gehen, sein, haben, kommen, etc.)
+  - Adjektive + alle Farben
+  - Alltagsnomen (Menschen, Familie, Orte, Gegenstände, Gefühle, Wetter, Essen)
+
+**Flexionsformen** (Konjugation, Deklination, Komparation) werden automatisch erkannt:
+- `kinder` → `kind` ✓
+- `baute` → `bauen` ✓
+- `größer` → `groß` ✓
+- `war` → `sein` ✓
+
+→ Detaillierte Dokumentation: **`docs/WORTLISTE.md`** (Entstehung, Wartung, Nachjustierung)
 
 ## Lokale Entwicklung
 
