@@ -2,9 +2,11 @@
 
 Eine mobile-first PWA zum Erklaeren von Begriffen — ausschliesslich mit den haeufigsten deutschen Woertern.
 
-Inspiriert von Randall Munroes Buch [Thing Explainer](https://xkcd.com/thing-explainer/).
-
 **Live:** https://kosmonautica.github.io/ThingExplainer/
+
+## Inspiration
+
+Das Projekt ist inspiriert vom Buch [**Thing Explainer**](https://xkcd.com/thing-explainer/) von Randall Munroe (bekannt fuer [xkcd](https://xkcd.com)). In dem Buch erklaert der Autor komplizierte Begriffe unserer modernen Welt — von Atomkraftwerken bis zur Raumstation — und beschraenkt sich dabei konsequent auf die 1000 haeufigsten einfachen englischen Woerter. Diese App uebtraegt das Prinzip ins Deutsche und macht daraus ein Spiel fuer Gruppen.
 
 ## Was ist das?
 
