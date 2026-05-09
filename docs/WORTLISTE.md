@@ -150,6 +150,15 @@ Verifiziert für 25 typische Spielbegriffe (klavier, gitarre, flugzeug, pilot, p
 
 ---
 
+### Version 3.1 (2026-05-09)
+
+- **`rad` hinzugefügt**: Klassisches Munroe-Erklär-Werkzeug ("ein Ding mit zwei Rädern") — war fälschlich nie in der Liste, obwohl Munroe "wheel" in seiner englischen Originalliste führt.
+- **Versionsanzeige**: `APP_VERSION` in `script.js` Zeile 1 ist die einzige Quelle der Wahrheit. Wird beim Laden automatisch in Header (`#appVersion`) und Modal-Footer (`#wlVersion`) geschrieben.
+
+**Ergebnis**: 1.126 Lemmas
+
+---
+
 ## Wartung und Nachjustierung
 
 ### Wort hinzufügen

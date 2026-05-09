@@ -30,7 +30,7 @@ Kein Login, kein Server, kein Sync — laeuft komplett im Browser.
 
 ## Wortliste
 
-**1.125 deutsche Lemmas (Grundformen)** nach der Munroe-Philosophie (v3.0):
+**1.126 deutsche Lemmas (Grundformen)** nach der Munroe-Philosophie (v3.1):
 
 - **Kategorie-Filter**: Konkrete Tiere, Berufe, Geräte, Gebäudetypen und spezifisches Essen sind grundsätzlich raus — das sind Spielbegriffe, die umschrieben werden sollen
 - **Erklär-Werkzeuge rein**: hammer, seil, ecke, kreis, wolke, dampf, klettern, zahn, lunge — Wörter die man braucht um andere Dinge zu beschreiben

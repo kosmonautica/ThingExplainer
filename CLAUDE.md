@@ -34,8 +34,11 @@ Workflow: .github/workflows/pages.yml
 
 Alternativ manuell per FTP: index.html, style.css, script.js, words.json, manifest.json, sw.js
 
+## Versionierung
+Die App-Version ist definiert als `APP_VERSION` in `script.js` Zeile 1. Sie ist die einzige Quelle der Wahrheit — Script setzt sie beim Laden in `#appVersion` (Header) und `#wlVersion` (Wortlisten-Modal-Footer). **Bei jeder Veröffentlichung (neue Wörter, neue Features) diese Zahl hochzählen und in `docs/WORTLISTE.md` eine neue Versionssektion anlegen.** Aktuelle Version: **3.1**
+
 ## Wortliste
-words.json ist ein einfaches JSON-Array mit 1.125 Lemmas (Grundformen), Stand v3.0.
+words.json ist ein einfaches JSON-Array mit 1.126 Lemmas (Grundformen), Stand v3.1.
 
 **Philosophie**: Munroes Simple English – Kategorie-Filter statt Wort-für-Wort: konkrete Tiere, Berufe, Geräte, Gebäudetypen und spezifisches Essen sind grundsätzlich raus (Spielbegriffe); Erklär-Werkzeuge (hammer, seil, ecke, wolke, klettern…) rein.
 
