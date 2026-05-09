@@ -15,7 +15,7 @@
     <h1>Thing Explainer</h1>
     <div class="counter">
       <span class="count-ok" id="countOk">0</span> erlaubt
-      <span class="sep">·</span>
+      <span class="sep">&middot;</span>
       <span class="count-bad" id="countBad">0</span> verboten
     </div>
     <button id="btnWordlist" class="btn-wordlist">Wortliste</button>
@@ -30,8 +30,13 @@
     <div class="modal-box">
       <div class="modal-header">
         <span class="modal-title">Erlaubte Wörter</span>
+        <span id="wlCount" class="wl-count"></span>
         <button id="closeWordlist" class="btn-close" aria-label="Schließen">✕</button>
       </div>
+      <div class="modal-search">
+        <input type="search" id="wlSearch" placeholder="Suchen …" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+      </div>
+      <div id="wlAZ" class="wl-az"></div>
       <div id="wordlistContent" class="wordlist-content"></div>
     </div>
   </div>
