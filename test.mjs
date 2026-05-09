@@ -11,15 +11,24 @@ const words = JSON.parse(readFileSync(join(__dir, 'words.json'), 'utf8'));
 // Minimales DOM-Mock damit script.js geladen werden kann
 const el = () => ({
   addEventListener: () => {},
+  appendChild: () => {},
   scrollTop: 0,
   value: '',
   innerHTML: '',
   hidden: false,
   textContent: '',
+  dataset: {},
+  className: '',
+  querySelectorAll: () => [],
+  scrollIntoView: () => {},
+  classList: { toggle: () => {}, add: () => {}, remove: () => {} },
 });
 
 const sandbox = {
-  document: { getElementById: () => el() },
+  document: {
+    getElementById: () => el(),
+    createElement: () => ({ ...el(), dataset: {}, className: '', appendChild: () => {} }),
+  },
   navigator: { serviceWorker: { register: () => {} } },
   fetch: () => new Promise(() => {}), // nie auflösen – wordSet bleibt leer bis wir es manuell setzen
   console,
