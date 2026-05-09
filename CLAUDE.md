@@ -35,11 +35,11 @@ Workflow: .github/workflows/pages.yml
 Alternativ manuell per FTP: index.html, style.css, script.js, words.json, manifest.json, sw.js
 
 ## Wortliste
-words.json ist ein einfaches JSON-Array mit 1.119 Lemmas (Grundformen).
+words.json ist ein einfaches JSON-Array mit 1.125 Lemmas (Grundformen), Stand v3.0.
 
-**Philosophie**: Munroes Simple English – nur die häufigsten, alltäglichsten deutschen Wörter. Keine Anglizismen, keine akademischen Begriffe.
+**Philosophie**: Munroes Simple English – Kategorie-Filter statt Wort-für-Wort: konkrete Tiere, Berufe, Geräte, Gebäudetypen und spezifisches Essen sind grundsätzlich raus (Spielbegriffe); Erklär-Werkzeuge (hammer, seil, ecke, wolke, klettern…) rein.
 
-**Quelle**: FrequencyWords (hermitdave/de_50k.txt) – Untertitel-basiert, reflektiert gesprochene Sprache.
+**Quellen**: Munroe-1000 (Up-Goer-Five ins Deutsche) + DWDS-Kernwortschatz + FrequencyWords de_50k.txt — jedes Wort muss in mindestens zwei Quellen vorkommen.
 
 **Aufnahme-Kriterium**: Wörter rein wenn sie *Werkzeug zum Erklären* sind. Wörter raus wenn sie selbst erklärt werden sollen (hotel, polizist, batterie...).
 
@@ -58,6 +58,7 @@ words.json ist ein einfaches JSON-Array mit 1.119 Lemmas (Grundformen).
 ## Testen
 - **Manuell**: `python3 -m http.server`, dann http://localhost:8000 — Text eingeben, gruen/rot Markierung pruefen
 - **Automatisiert**: `node test.mjs` — 57 Tests (Datenintegrität, Morphologie, Unicode-Umlaute)
+- **Stresstest**: `node test.stress.mjs` — informativ; prueft ob 25 Spielbegriffe (klavier, hund, flugzeug…) sich mit der Wortliste in 1–3 Saetzen erklaeren lassen
 
 <!-- SPECKIT START -->
 For additional context about technologies to be used, project structure,
