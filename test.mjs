@@ -62,12 +62,12 @@ describe('words.json – Datenintegrität', () => {
     assert.equal(new Set(words).size, words.length);
   });
 
-  test('Anzahl zwischen 1100 und 1200 Wörtern', () => {
-    assert.ok(words.length >= 1100 && words.length <= 1200, `Tatsächlich: ${words.length}`);
+  test('Anzahl zwischen 1050 und 1150 Wörtern', () => {
+    assert.ok(words.length >= 1050 && words.length <= 1150, `Tatsächlich: ${words.length}`);
   });
 
   test('Keine bekannten Anglizismen enthalten', () => {
-    const anglizismen = ['computer', 'internet', 'team', 'app', 'software', 'email', 'chat', 'video', 'job', 'fair', 'chance'];
+    const anglizismen = ['computer', 'internet', 'team', 'app', 'software', 'email', 'chat', 'video', 'job', 'fair', 'chance', 'auto', 'taxi', 'gummi', 'sport', 'band'];
     const found = anglizismen.filter(w => words.includes(w));
     assert.deepEqual(found, [], `Gefundene Anglizismen: ${found.join(', ')}`);
   });
@@ -84,17 +84,44 @@ describe('words.json – Datenintegrität', () => {
     assert.deepEqual(missing, [], `Fehlende Grundwörter: ${missing.join(', ')}`);
   });
 
-  test('Ergänzte Grundwörter vorhanden (Kategorie 1+2)', () => {
+  test('Munroe-Erklärwerkzeuge vorhanden (v3.0 Kategorien)', () => {
     const required = [
-      'turm', 'boot', 'bauer', 'fahrer', 'richter', 'waffe', 'schild', 'pumpe', 'schalter', 'strom', 'hitze', 'kaelte',
-      'maschine', 'motor', 'musik', 'energie', 'gummi', 'sosse', 'essig', 'instrument', 'soldat',
+      // Werkzeuge & Materialien
+      'hammer', 'säge', 'zange', 'faden', 'seil', 'kette', 'nadel', 'schere', 'messer', 'topf', 'flasche', 'schlüssel', 'eimer',
+      // Geometrie
+      'ecke', 'kante', 'rand', 'kreis', 'linie', 'loch', 'winkel', 'fläche',
+      // Natur/Physik
+      'wolke', 'blitz', 'dampf', 'rauch', 'schatten', 'licht', 'wärme', 'kälte', 'eisen', 'leder', 'sand',
+      // Körperteile
+      'zahn', 'lunge', 'knie', 'brust', 'daumen', 'zunge',
+      // Verben des Tuns
+      'klettern', 'greifen', 'biegen', 'binden', 'brechen', 'schneiden', 'schmelzen', 'kleben',
+      // Familie
+      'sohn', 'tochter', 'oma', 'opa',
+      // Abstrakt
+      'tier', 'pflanze', 'ding', 'person',
     ];
     const missing = required.filter(w => !words.includes(w));
-    assert.deepEqual(missing, [], `Fehlende Ergänzungen: ${missing.join(', ')}`);
+    assert.deepEqual(missing, [], `Fehlende Munroe-Erklärwerkzeuge: ${missing.join(', ')}`);
   });
 
-  test('Spielerklärbare Wörter nicht enthalten (hotel, polizist, etc.)', () => {
-    const shouldBeExplained = ['hotel', 'restaurant', 'polizist', 'pilot', 'batterie', 'garage', 'tunnel', 'balkon', 'traktor'];
+  test('Spielerklärbare Wörter nicht enthalten (Munroe-Philosophie)', () => {
+    const shouldBeExplained = [
+      // ursprünglich
+      'hotel', 'restaurant', 'polizist', 'pilot', 'batterie', 'garage', 'tunnel', 'balkon', 'traktor',
+      // v3.0: konkrete Tiere
+      'hund', 'katze', 'kuh', 'pferd', 'fuchs', 'fisch', 'vogel', 'schaf', 'schwein',
+      // v3.0: Berufe
+      'arzt', 'lehrer', 'professor', 'richter', 'fahrer', 'soldat', 'bauer',
+      // v3.0: konkrete Geräte
+      'flugzeug', 'fernseher', 'telefon', 'fahrrad', 'instrument', 'schiff', 'zug', 'boot',
+      // v3.0: Gebäude/Orte
+      'bahnhof', 'kirche', 'krankenhaus', 'hafen', 'turm', 'brücke', 'schule', 'markt',
+      // v3.0: spezifisches Essen
+      'schokolade', 'kaffee', 'käse', 'kuchen', 'tee', 'bier', 'wein',
+      // v3.0: Musik/Kunst
+      'musik', 'lied', 'theater',
+    ];
     const found = shouldBeExplained.filter(w => words.includes(w));
     assert.deepEqual(found, [], `Sollten nicht in der Liste sein: ${found.join(', ')}`);
   });
