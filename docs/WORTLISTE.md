@@ -75,6 +75,81 @@ Nach Review wurden 39 Wörter als fälschlich gefiltert identifiziert. Davon wur
 
 ---
 
+### Version 3.0 — radikale Munroe-Konsolidierung
+
+**Anlass**: v2.1 war intern inkonsistent. `polizist`, `pilot`, `klavier` waren korrekt ausgeschlossen, aber dutzende vergleichbarer Spielbegriffe (`hund`, `katze`, `arzt`, `lehrer`, `flugzeug`, `fernseher`, `bahnhof`, `kirche`) waren noch enthalten. Gleichzeitig fehlten klassische Munroe-Erklär-Werkzeuge (`hammer`, `seil`, `ecke`, `kreis`, `wolke`, `dampf`, `klettern`).
+
+**Ursache**: Die Quelle `de_50k.txt` (Untertitel-Frequenz) liefert Drama-/Konversations-Wortschatz statt Werkstatt-/Physik-/Erklär-Wortschatz.
+
+#### Methodische Änderungen
+
+**1. Kategorie-Filter statt Wort-für-Wort-Bewertung**
+
+Ein Wort kommt automatisch raus, wenn es in eine dieser Kategorien fällt:
+
+| Kategorie | Beispiele | Logik |
+|---|---|---|
+| Konkrete Tierart | hund, katze, kuh, fuchs, fisch | Spielbegriff; ersetzbar durch „tier, das …" |
+| Konkreter Beruf | arzt, lehrer, richter, fahrer, soldat | Spielbegriff; „person, die …" |
+| Konkretes Gerät | flugzeug, fernseher, telefon, fahrrad | Spielbegriff; „ding, das …" |
+| Gebäudetyp | bahnhof, kirche, krankenhaus, hafen | Spielbegriff; „haus, in dem …" |
+| Spezifisches Lebensmittel | schokolade, kaffee, käse, kuchen | Spielbegriff; „essen, das …" |
+| Musikinstrument / -werk | instrument, lied, musik | Spielbegriff |
+| Anglizismus / Lehnwort | auto, taxi, sport, gummi, band | Lehnwort, oft Spielbegriff |
+| Fachjargon | system, abteilung, behandlung | abstrakt-akademisch |
+
+**Aufnahme-Regel**: Wort rein, wenn alle drei zutreffen:
+1. Kommt mehrfach als Hilfsmittel in kindgerechten Erklärungen vor
+2. Konkret-greifbar, nicht abstrakt
+3. Nicht durch zwei einfachere Wörter ersetzbar
+
+**2. Quellen-Stack (statt Single-Source)**
+
+Jedes Wort muss in **mindestens zwei** Quellen vorkommen:
+
+1. **Munroe-1000** (Up-Goer-Five-Liste, ins Deutsche übersetzt) — das Erklärwerkzeug-Skelett
+2. **DWDS-Kernwortschatz** (~2.000 deutsche Hochfrequenzwörter, redaktionell kuratiert) — deutsche Spezifika
+3. **`de_50k.txt`** (FrequencyWords) — Plausibilitäts-Schicht
+
+Wörter, die nur in (3) vorkommen, sind Verdachtsfälle.
+
+**3. Stresstest** (`test.stress.mjs`)
+
+Verifiziert für 25 typische Spielbegriffe (klavier, gitarre, flugzeug, pilot, polizist, hund, …), ob jeweils eine 1–3-Satz-Erklärung mit der aktuellen Wortliste auskommt. Nicht-blockierend; rein informativ. Aktuell: **24 von 25 voll erklärbar**.
+
+#### Konkrete Änderungen v3.0
+
+**Entfernt (~80 Wörter):**
+- Tiere: `bär, fisch, fuchs, hase, huhn, hund, katze, kuh, pferd, ratte, schaf, schwein, vogel, wolf, ziege`
+- Berufe: `arzt, bauer, fahrer, lehrer, professor, richter, soldat`
+- Geräte/Verkehr: `auto, bahn, boot, fahrrad, fernseher, flugzeug, instrument, schiff, taxi, telefon, zug`
+- Gebäude/Orte: `bahnhof, brücke, garten, hafen, kirche, krankenhaus, laden, markt, park, schule, turm, wohnung`
+- Spez. Essen: `bier, butter, eis, essig, kaffee, kuchen, käse, reis, saft, schokolade, sosse, suppe, tee, wein`
+- Musik/Kunst: `lied, musik, theater`
+- Anglizismen: `band, gummi, sport`
+- Plätze/Events: `fest, reise`
+- Beziehungen: `gast, kunde`
+- Möbel-Räume: `bad, küche, schrank`
+- Jargon: `abteilung, behandlung, beruf, entscheidung, erfahrung, erfolg, firma, gelegenheit, system, titel`
+
+**Bewusst behalten** (mehrfach-nutzbar als Erklär-Bauteil): `motor, maschine, pumpe, schalter, waffe, schild, strom, energie, hitze` — diese sind durch andere Erklärungen oft Hilfsmittel, nicht Ziel.
+
+**Neu hinzugekommen (~85 Wörter):**
+- Werkzeuge: `hammer, säge, zange, schraube, faden, draht, seil, kette, nadel, schere, messer, gabel, löffel, topf, pfanne, tasse, flasche, schlüssel, eimer`
+- Geometrie: `ecke, kante, rand, spitze, kreis, dreieck, winkel, loch, linie, fläche`
+- Natur/Physik: `wolke, blitz, donner, dampf, rauch, asche, schaum, blase, schatten, licht, wärme, kälte, eisen, leder, sand, wolle`
+- Körperteile: `zahn, lunge, knie, brust, daumen, lippe, zunge, stirn, wange`
+- Verben: `klettern, greifen, biegen, binden, brechen, rollen, schneiden, schmelzen, kleben, gießen, mischen, falten, tun`
+- Familie: `oma, opa, sohn, tochter`
+- Pflanzen: `wurzel, samen, busch, korn`
+- Munroe-Grundwörter: `kiste, stock, gott, schwanz, draußen, kabel, flügel, taste, wagen, ander`
+
+**Nebenfix** in `script.js`: Die `irregulars`-Map enthielt Lemma-Werte in ASCII-Form (`koennen`, `muessen`, `heissen`), während `words.json` Unicode-Form (`können`, `müssen`, `heißen`) führte. Ergebnis: Formen wie `kann`, `muss`, `hieß` wurden fälschlich als rot markiert. Lemma-Werte sind jetzt auf Unicode umgestellt; ASCII-Schlüssel bleiben für Tipper ohne Umlaut-Tastatur weiter erkannt.
+
+**Ergebnis**: 1.125 Lemmas (Größenkorridor weiterhin schmal, aber Inhalt deutlich Munroe-näher).
+
+---
+
 ## Wartung und Nachjustierung
 
 ### Wort hinzufügen
@@ -110,16 +185,22 @@ Die `isAllowed()`-Funktion in `script.js` erkennt automatisch:
 ## Testing
 
 ```bash
-node test.mjs   # 57 Tests, alle müssen grün sein
+node test.mjs          # 57 Tests, alle müssen grün sein
+node test.stress.mjs   # informativ: Erklärbarkeit von 25 Spielbegriffen
 ```
 
-Test-Suites:
-- Datenintegrität (Strings, lowercase, keine Duplikate, Größe 1100–1200)
+`test.mjs` (blockierend) Test-Suites:
+- Datenintegrität (Strings, lowercase, keine Duplikate, Größe 1050–1150)
 - Kein Anglizismus, keine spielerklärbaren Wörter
-- Ergänzte Grundwörter vorhanden
+- Munroe-Erklärwerkzeuge vorhanden (v3.0 Kategorien)
 - Unicode-Umlaut-Normalisierung
 - Flexionsformen (Substantive, Verben, Adjektive, Irreguläre)
 - HTML-Escape-Funktion
+
+`test.stress.mjs` (informativ) prüft:
+- Ob 25 typische Spielbegriffe (klavier, fahrrad, hotel, polizist, hund, …) sich mit der aktuellen Wortliste in 1–3 Sätzen erklären lassen
+- Welche Wörter in den Beispiel-Erklärungen fehlen → Hinweise für Wortlisten-Wartung oder bessere Erklärungen
+- Aktuell: 24 von 25 voll erklärbar
 
 ---
 
@@ -179,4 +260,4 @@ Nicht direkt — `irregulars` und `suffixes` sind deutschsprachig. Neue Sprache 
 
 ---
 
-**Version**: 2.1 | **Letztes Update**: 2026-05-09
+**Version**: 3.0 | **Letztes Update**: 2026-05-09
