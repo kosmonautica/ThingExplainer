@@ -2,7 +2,7 @@ const input = document.getElementById('input');
 const backdrop = document.getElementById('backdrop');
 const countOk = document.getElementById('countOk');
 const countBad = document.getElementById('countBad');
-let wordSet = new Set();
+var wordSet = new Set();
 const irregulars = new Map([
   ['bin','sein'],['bist','sein'],['ist','sein'],['sind','sein'],['seid','sein'],['war','sein'],['warst','sein'],['waren','sein'],['wart','sein'],['gewesen','sein'],['sei','sein'],['seien','sein'],['waere','sein'],['waeren','sein'],
   ['habe','haben'],['hast','haben'],['hat','haben'],['habt','haben'],['hatte','haben'],['hattest','haben'],['hatten','haben'],['hattet','haben'],['gehabt','haben'],['haette','haben'],['haettest','haben'],['haetten','haben'],['haettet','haben'],
@@ -56,7 +56,7 @@ const irregulars = new Map([
   ['wuchs','wachsen'],['gewachsen','wachsen'],['waechst','wachsen'],
 ]);
 const suffixes = ['ungsweise','ungsgemaess','ungen','ung','heiten','heit','keiten','keit','schaften','schaft','lichen','lichem','licher','liches','liche','lich','ischen','ischem','ischer','isches','ische','isch','enden','endem','ender','endes','ende','end','igsten','igster','igstem','igstes','igste','igst','ige','igen','igem','iger','iges','ig','test','tet','ten','te','sten','ster','stem','stes','ste','st','est','et','en','em','er','es','e','n','t'];
-function umlautBack(s) { return s.replace(/ae/g,'a').replace(/oe/g,'o').replace(/ue/g,'u').replace(/ss/g,'s'); }
+function umlautBack(s) { return s.replace(/ä/g,'a').replace(/ö/g,'o').replace(/ü/g,'u').replace(/ß/g,'s').replace(/ae/g,'a').replace(/oe/g,'o').replace(/ue/g,'u').replace(/ss/g,'s'); }
 function checkStem(stem) {
   if (stem.length < 2) return false;
   if (wordSet.has(stem)) return true;
@@ -70,7 +70,7 @@ function checkStem(stem) {
   }
   return false;
 }
-function isAllowed(rawWord) { const word = rawWord.toLowerCase(); if (!word) return false; const lemma = irregulars.get(word); if (lemma !== undefined) return wordSet.has(lemma); if (wordSet.has(word)) return true; for (const s of suffixes) { if (word.endsWith(s) && word.length - s.length >= 2) { if (checkStem(word.slice(0, -s.length))) return true; } } const d = umlautBack(word); return d !== word && wordSet.has(d); }
+function isAllowed(rawWord) { const word = rawWord.toLowerCase(); if (!word) return false; const lemma = irregulars.get(word); if (lemma !== undefined) return wordSet.has(lemma); if (wordSet.has(word)) return true; for (const s of suffixes) { if (word.endsWith(s) && word.length - s.length >= 2) { if (checkStem(word.slice(0, -s.length))) return true; } } if (word.startsWith('ge') && word.length > 4) { const body = word.slice(2); if (checkStem(body)) return true; if (body.endsWith('et') && checkStem(body.slice(0, -2))) return true; if (body.endsWith('t') && checkStem(body.slice(0, -1))) return true; } const d = umlautBack(word); return d !== word && wordSet.has(d); }
 function escapeHtml(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 function render() { const tokens = input.value.match(/[a-zA-ZäöüÄÖÜß]+|[^a-zA-ZäöüÄÖÜß]+/g) || []; let ok = 0, bad = 0, html = ''; for (const token of tokens) { if (/[a-zA-ZäöüÄÖÜß]/.test(token)) { if (isAllowed(token)) { ok++; html += '<mark class="ok">' + escapeHtml(token) + '</mark>'; } else { bad++; html += '<mark class="bad">' + escapeHtml(token) + '</mark>'; } } else { html += escapeHtml(token); } } backdrop.innerHTML = html + '\n'; backdrop.scrollTop = input.scrollTop; countOk.textContent = ok; countBad.textContent = bad; }
 input.addEventListener('input', render);
