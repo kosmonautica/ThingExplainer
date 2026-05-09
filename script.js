@@ -1,3 +1,4 @@
+const APP_VERSION = '3.1';
 const input = document.getElementById('input');
 const backdrop = document.getElementById('backdrop');
 const countOk = document.getElementById('countOk');
@@ -78,6 +79,8 @@ input.addEventListener('input', render);
 input.addEventListener('scroll', () => { backdrop.scrollTop = input.scrollTop; });
 fetch('words.json').then(r => r.json()).then(words => { wordSet = new Set(words); render(); });
 if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js');
+document.getElementById('appVersion').textContent = 'v' + APP_VERSION;
+document.getElementById('wlVersion').textContent = 'v' + APP_VERSION;
 
 const wlSearch = document.getElementById('wlSearch');
 const wlCount = document.getElementById('wlCount');

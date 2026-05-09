@@ -40,3 +40,6 @@ mark.bad { color: var(--red); }
 .wl-letter-heading { width: 100%; color: var(--text-muted); font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; padding: 0.5rem 0 0.2rem; margin-top: 0.25rem; }
 .wl-letter-heading:first-child { margin-top: 0; padding-top: 0; }
 .wl-empty { color: var(--text-muted); font-size: 0.85rem; }
+.app-version { font-size: 0.65rem; color: var(--text-muted); font-weight: 400; letter-spacing: 0.03em; vertical-align: middle; opacity: 0.7; }
+.modal-footer { padding: 0.4rem 1rem; border-top: 1px solid #334155; flex-shrink: 0; text-align: right; }
+.wl-version { font-size: 0.7rem; color: var(--text-muted); opacity: 0.7; }
