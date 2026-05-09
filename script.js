@@ -78,13 +78,48 @@ input.addEventListener('scroll', () => { backdrop.scrollTop = input.scrollTop; }
 fetch('words.json').then(r => r.json()).then(words => { wordSet = new Set(words); render(); });
 if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js');
 
-document.getElementById('btnWordlist').addEventListener('click', () => {
-  const modal = document.getElementById('wordlistModal');
-  const content = document.getElementById('wordlistContent');
-  const sorted = [...wordSet].sort((a, b) => a.localeCompare(b, 'de'));
-  content.innerHTML = sorted.map(w => '<span class="wl-word">' + escapeHtml(w) + '</span>').join('');
-  modal.hidden = false;
+const wlSearch = document.getElementById('wlSearch');
+const wlCount = document.getElementById('wlCount');
+const wlAZ = document.getElementById('wlAZ');
+
+'abcdefghijklmnopqrstuvwxyz'.split('').forEach(letter => {
+  const btn = document.createElement('button');
+  btn.textContent = letter.toUpperCase();
+  btn.className = 'wl-az-btn';
+  btn.dataset.letter = letter;
+  btn.addEventListener('click', () => {
+    const h = document.getElementById('wl-letter-' + letter);
+    if (h) h.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+  wlAZ.appendChild(btn);
 });
+
+function fletter(w) { return w[0].replace(/[äÄ]/g,'a').replace(/[öÖ]/g,'o').replace(/[üÜ]/g,'u').replace(/ß/g,'s'); }
+function normSearch(s) { return s.toLowerCase().replace(/ä/g,'a').replace(/ö/g,'o').replace(/ü/g,'u').replace(/ß/g,'s'); }
+
+function renderWordlist(q) {
+  q = q.trim().toLowerCase();
+  const all = [...wordSet].sort((a, b) => a.localeCompare(b, 'de'));
+  const words = q ? all.filter(w => w.includes(q) || normSearch(w).includes(normSearch(q))) : all;
+  const active = new Set();
+  let html = '', cur = null;
+  for (const w of words) {
+    const fl = fletter(w);
+    if (fl !== cur) { cur = fl; active.add(fl); html += '<div class="wl-letter-heading" id="wl-letter-' + fl + '">' + fl.toUpperCase() + '</div>'; }
+    html += '<span class="wl-word">' + escapeHtml(w) + '</span>';
+  }
+  document.getElementById('wordlistContent').innerHTML = html || '<span class="wl-empty">Keine Wörter gefunden</span>';
+  wlCount.textContent = q ? words.length + ' von ' + wordSet.size : wordSet.size + ' Wörter';
+  wlAZ.querySelectorAll('.wl-az-btn').forEach(btn => btn.classList.toggle('disabled', !active.has(btn.dataset.letter)));
+}
+
+document.getElementById('btnWordlist').addEventListener('click', () => {
+  wlSearch.value = '';
+  renderWordlist('');
+  document.getElementById('wordlistModal').hidden = false;
+  wlSearch.focus();
+});
+wlSearch.addEventListener('input', () => renderWordlist(wlSearch.value));
 document.getElementById('closeWordlist').addEventListener('click', () => {
   document.getElementById('wordlistModal').hidden = true;
 });
