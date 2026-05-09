@@ -19,6 +19,13 @@ Thing Explainer ist eine mobile-first PWA inspiriert von Randall Munroes Buch Th
 - Morphologie via Suffix-Stripping, Umlaut-Normalisierung, Irregulae-Tabelle
 - Keine externe NLP-Bibliothek
 
+## 3b. Wortlisten-Modal (v1.1)
+- Suchfeld mit Auto-Fokus: Modal oeffnet direkt mit Cursor im Suchfeld
+- Echtzeit-Filter: Substring-Suche, case-insensitiv, Umlaut-normalisiert (ae/oe/ue und Unicode-Umlaute gleichwertig)
+- A-Z-Navigationsleiste: Klick springt zum jeweiligen Buchstabenabschnitt; inaktive Buchstaben ausgegraut
+- Wortzaehler im Modal-Header: Gesamtanzahl erlaubter Woerter; bei aktiver Suche Trefferanzahl
+- Leerzustand: Hinweistext wenn Suche keine Treffer liefert
+
 ## 4. Nicht-funktionale Anforderungen
 - Web/PWA, laeuft in jedem modernen Mobilbrowser
 - Offline nach erstem Laden (Service Worker)

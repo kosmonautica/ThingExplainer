@@ -20,6 +20,11 @@ Manuell im Browser pruefen:
 - Zaehler (erlaubt / verboten) aktualisiert sich korrekt
 - Flektierte Formen werden erkannt (z.B. "baute", "fester", "laufend")
 - Wortliste-Button oeffnet Modal mit allen erlaubten Woertern
+- Modal oeffnet mit Fokus im Suchfeld (sofort tippen moeglich)
+- Suchfeld filtert Liste in Echtzeit (Substring, case-insensitiv, Umlaut-normalisiert)
+- A-Z-Leiste springt per Klick zum jeweiligen Buchstabenabschnitt
+- Inaktive Buchstaben (keine Treffer) sind ausgegraut
+- Wortzaehler zeigt Gesamtzahl bzw. Trefferanzahl beim Filtern
 - Offline-Funktion nach erstem Laden (Service Worker)
 - Mobile-Layout passt sich an
 
