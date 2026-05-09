@@ -35,11 +35,13 @@ Workflow: .github/workflows/pages.yml
 Alternativ manuell per FTP: index.html, style.css, script.js, words.json, manifest.json, sw.js
 
 ## Wortliste
-words.json ist ein einfaches JSON-Array mit 1.098 Lemmas (Grundformen).
+words.json ist ein einfaches JSON-Array mit 1.119 Lemmas (Grundformen).
 
 **Philosophie**: Munroes Simple English – nur die häufigsten, alltäglichsten deutschen Wörter. Keine Anglizismen, keine akademischen Begriffe.
 
 **Quelle**: FrequencyWords (hermitdave/de_50k.txt) – Untertitel-basiert, reflektiert gesprochene Sprache.
+
+**Aufnahme-Kriterium**: Wörter rein wenn sie *Werkzeug zum Erklären* sind. Wörter raus wenn sie selbst erklärt werden sollen (hotel, polizist, batterie...).
 
 **Wartung & Nachjustierung**: → siehe `docs/WORTLISTE.md`
 
@@ -55,7 +57,7 @@ words.json ist ein einfaches JSON-Array mit 1.098 Lemmas (Grundformen).
 
 ## Testen
 - **Manuell**: `python3 -m http.server`, dann http://localhost:8000 — Text eingeben, gruen/rot Markierung pruefen
-- **Automatisiert**: `node test.mjs` — 55 Tests (Datenintegrität, Morphologie, Unicode-Umlaute)
+- **Automatisiert**: `node test.mjs` — 57 Tests (Datenintegrität, Morphologie, Unicode-Umlaute)
 
 <!-- SPECKIT START -->
 For additional context about technologies to be used, project structure,

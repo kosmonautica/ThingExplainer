@@ -8,67 +8,70 @@ Die Wortliste folgt der Philosophie von **Randall Munroe** aus seinem Buch *Thin
 - **Klingt vertraut**: Ein deutsches Grundschulkind würde das Wort kennen
 - **Keine Fremdwörter**: Keine Anglizismen (computer, internet, app, team, job) und keine Lehnwörter
 - **Keine akademischen Begriffe**: Zu abstrakte oder formale Wörter (kompetenz, gesellschaft, struktur, prozess)
+- **Werkzeug, nicht Ziel**: Wörter rein wenn sie zum Erklären dienen; raus wenn sie selbst erklärt werden sollen
 
-**Ziel**: ~1000 Lemmas (Grundformen) mit einfachen, konkret greifbaren Bedeutungen.
+**Ziel**: ~1000–1200 Lemmas (Grundformen) mit einfachen, konkret greifbaren Bedeutungen.
 
 ---
 
-## Entstehung der aktuellen Wortliste (v2.0, 2026-05-09)
+## Das Aufnahme-Kriterium
 
-### Datenquelle
+**Kernfrage**: Ist dieses Wort ein *Werkzeug zum Erklären*, oder ist es selbst etwas das erklärt werden soll?
+
+- `maschine` → **rein**: Man braucht es um andere Dinge zu erklären ("eine Maschine die Wärme erzeugt")
+- `hotel` → **raus**: Das ist selbst ein Begriff den Spielende erklären müssen ("ein Haus in dem man bezahlt um darin zu schlafen")
+- `motor` → **rein**: Allgemeines Hilfswort, kein Spielbegriff
+- `polizist` → **raus**: Ein Beruf den man umschreiben kann und soll
+
+---
+
+## Entstehung der Wortliste
+
+### Version 2.0 (2026-05-09)
+
+#### Datenquelle
 
 **hermitdave/FrequencyWords – `de_50k.txt`**
 - URL: https://raw.githubusercontent.com/hermitdave/FrequencyWords/master/content/2018/de/de_50k.txt
 - Lizenz: CC-BY
 - Basis: Untertitel (Filme/Serien) → reflektiert gesprochene Alltagssprache statt Akademia
 - Format: `wort häufigkeit` (nach Häufigkeit sortiert)
-- Vorteil: Keine Anglizismen-Bias in den Top-Einträgen; all genuine deutsche Wörter
+- Vorteil: Keine Anglizismen-Bias in den Top-Einträgen
 
-### Kurations-Prozess
+#### Kurations-Prozess
 
 **Schritt 1 – Rohliste generieren**
 - Top-3.000 Wörter aus de_50k.txt extrahiert
-- Automatisch gefiltert:
-  - Großschreibung (Eigennamen)
-  - Zahlen und Symbole
-  - Offensichtliche Anglizismen (keine deutschen Suffixe, atypisches Muster)
+- Automatisch gefiltert: Großschreibung (Eigennamen), Zahlen, offensichtliche Anglizismen
 
 **Schritt 2 – Anglizismus-Filter**
-- Bekannte englische Wörter entfernt: `computer`, `laptop`, `tablet`, `handy`, `internet`, `app`, `software`, `server`, `website`, `email`, `chat`, `podcast`, `video`, `film`, `foto`, `grafik`, `diagramm`, `programm`, `kanal`, `radio`, `job`, `projekt`
-- Lateinische Schein-Fremdwörter geprüft (z. B. `radio` hat deutsches Suffix `-dio`, aber bleibt problematisch)
+- Entfernt: `computer`, `laptop`, `tablet`, `handy`, `internet`, `app`, `software`, `server`, `website`, `email`, `chat`, `podcast`, `video`, `film`, `foto`, `grafik`, `diagramm`, `programm`, `kanal`, `radio`, `job`, `projekt`
 
 **Schritt 3 – Einfachheits-Filter (Munroe-Kriterium)**
-- Behalten:
-  - Körperteile (auge, kopf, hand, bein)
-  - Familie (mutter, vater, kind, bruder, schwester)
-  - Farben (rot, blau, gruen, gelb, schwarz, weiss)
-  - Zahlen und Mengenwörter (eins, zwei, drei, zehn, hundert, mehrere)
-  - Wetter (sonne, regen, schnee, wind, wolke)
-  - Essen/Trinken (wasser, brot, fleisch, obst, gemüse, milch, butter)
-  - Alltagsgefühle (freude, angst, liebe, wut, trauer)
-  - Häufige Verben (gehen, machen, denken, sagen, sehen, hoeren, nehmen, geben)
-  - Grundadjektive (gross, klein, schnell, langsam, schoen, haesslich, alt, jung, neu)
-
-- Entfernt: Zu abstrakt oder akademisch
-  - `kompetenz`, `gesellschaft`, `individuum`, `prozess`, `kontext`, `struktur`, `funktion`, `rolle`, `prinzip`, `modell`, `standard`, `niveau`, `methode`, `verfahren`, `ablauf`, `situation`, `umstand`, `vergleich`, `ähnlichkeit`, `gemeinsamkeit`, `unterschied`, `zusammenfassung`, `beschreibung`, `leistung`, `bevölkerung`
+- Behalten: Körperteile, Familie, Farben, Zahlen, Wetter, Essen/Trinken, Alltagsgefühle, häufige Verben, Grundadjektive
+- Entfernt (zu abstrakt/akademisch): `kompetenz`, `gesellschaft`, `individuum`, `prozess`, `kontext`, `struktur`, `funktion`, `rolle`, `prinzip`, `modell`, `standard`, `niveau`, `methode`, `verfahren`, `ablauf`, `situation`, `umstand`, `vergleich`, `ähnlichkeit`, `gemeinsamkeit`, `unterschied`, `zusammenfassung`, `beschreibung`, `leistung`, `bevölkerung`
 
 **Schritt 4 – Abgleich mit vorheriger Liste**
-- Gute Wörter aus der ursprünglichen words.json (1127 Wörter) beibehalten
-- Fehlende einfache Wörter aus de_50k.txt ergänzt
-- Redundante oder seltsam klingende Wörter gelöscht
+Gute Wörter aus der ursprünglichen words.json (1127 Einträge) beibehalten; Fehlende ergänzt.
 
-**Schritt 5 – Manueller Review**
-- Stichproben-Tests durchgeführt (z. B. "Computer" rot, "Haus" grün, "läuft" grün)
-- Flektierte Formen validiert (das Morphologie-System erkennt automatisch Flexionen)
+**Ergebnis**: 1.098 Lemmas
 
-### Ergebnis
+---
 
-**Finale Wortliste**: 1.098 Lemmas (down from 1.127)
+### Version 2.1 (2026-05-09) — 21 Wörter ergänzt
 
-**Ausgeschlossene Kategorien**:
-- ~30 Anglizismen / Fremdwörter
-- ~25 zu abstrakte / akademische Begriffe
-- ~20 seltsam klingende oder zu spezifische Wörter (spezialausdrücke, Jargon)
+Nach Review wurden 39 Wörter als fälschlich gefiltert identifiziert. Davon wurden 21 aufgenommen:
+
+**Kategorie 1 — echte deutsche Wörter** (hätten nie fehlen dürfen):
+`turm`, `boot`, `bauer`, `fahrer`, `richter`, `waffe`, `schild`, `pumpe`, `schalter`, `strom`, `hitze`, `kaelte`
+
+**Kategorie 2 — vollständig eingebürgerte Lehnwörter als Hilfswörter**:
+`maschine`, `motor`, `musik`, `energie`, `gummi`, `sosse`, `essig`, `instrument`, `soldat`
+
+**Bewusst draußen gelassen** (spielerklärbar):
+`hotel`, `restaurant`, `polizist`, `pilot`, `batterie`, `garage`, `tunnel`, `balkon`, `traktor`, `gitarre`, `klavier`, `trommel`, `geige`, `bäcker`, `metzger`, `chef`, `magnet`
+
+**Ergebnis**: 1.119 Lemmas
 
 ---
 
@@ -77,79 +80,46 @@ Die Wortliste folgt der Philosophie von **Randall Munroe** aus seinem Buch *Thin
 ### Wort hinzufügen
 
 1. `words.json` öffnen (JSON-Array von Strings, lowercase)
-2. Neues Lemma am ende hinzufügen: `"neueswort"`
-3. Keine besondere Sortierung nötig (App sortiert beim Anzeigen)
-4. Testen: Suchfeld in der App öffnen, neues Wort sollte grün erscheinen
-
-**Beispiel**:
-```json
-[
-  "haus",
-  "gehen",
-  "rot",
-  "neueswort"
-]
-```
+2. Neues Lemma hinzufügen
+3. Prüfen: Ist es ein Werkzeug zum Erklären? Oder selbst erklärbar?
+4. `node test.mjs` ausführen — alle 57 Tests müssen grün sein
+5. Committen und pushen
 
 ### Wort entfernen
 
-1. `words.json` öffnen
-2. Zeile mit dem Wort löschen
-3. Im Browser testen: Wort sollte jetzt rot markiert werden
+1. `words.json` öffnen, Zeile löschen
+2. `node test.mjs` ausführen
+3. Im Browser testen: Wort sollte jetzt rot erscheinen
 
 ### Flexionsformen prüfen
 
-Die `isAllowed()`-Funktion in `script.js` erkennt automatisch Flexionsformen durch:
-
+Die `isAllowed()`-Funktion in `script.js` erkennt automatisch:
 1. **Irregulare Tabelle** (z. B. `war` → `sein`)
 2. **Direkter Treffer** (Infinitiv in der Liste)
 3. **Suffix-Stripping** (z. B. `baute` → `bau` + Infinitiv `bauen`)
-4. **Umlaut-Normalisierung** (ä↔a, ö↔o, ü↔u, ß↔s)
+4. **ge-Präfix** (Partizipien II: `gelacht` → `lachen`)
+5. **Umlaut-Normalisierung** (ä↔a, ö↔o, ü↔u, ß↔s)
 
-Wenn ein Lemma hinzugefügt wird (z. B. `lachen`), funktionieren automatisch:
-- `lachte` (Präteritum)
-- `gelacht` (Partizip II)
-- `lachend` (Partizip I)
-- `lache` (Präsens 1. Person)
-
-**Wenn ein Wort nicht erkannt wird** (trotz gültigem Lemma in der Liste):
-- Prüfen Sie `irregulars` Map in `script.js` (Zeile 6–57)
-- Prüfen Sie `suffixes` Array (Zeile 58) – sind alle Endungen abgedeckt?
+**Wenn ein Wort nicht erkannt wird** (trotz gültigem Lemma):
+- `irregulars` Map in `script.js` Zeile 6–57 prüfen
+- `suffixes` Array Zeile 58 prüfen
 - Im Notfall: Irregular-Form manuell zur Map hinzufügen
 
 ---
 
 ## Testing
 
-### Manuell im Browser
-
 ```bash
-python3 -m http.server
-# http://localhost:8000
+node test.mjs   # 57 Tests, alle müssen grün sein
 ```
 
-**Testfälle**:
-- Typisches Wort: `haus` (grün)
-- Flexion: `häuser`, `hauser`, `haesuser` (alle grün – Umlaute und ASCII-Digraphen werden normalisiert)
-- Irregular: `ging`, `war`, `baute` (grün)
-- Anglizismus: `computer`, `internet` (rot)
-- Abstrakt: `kompetenz`, `gesellschaft` (rot)
-- Wortliste-Modal: Öffnet mit Fokus im Suchfeld, filtert in Echtzeit, A-Z-Navigation springt
-
-### Automatisiert (Node.js)
-
-```bash
-node test.mjs
-```
-
-Dieser Test lädt `script.js` in einer VM, befüllt `wordSet` und führt 55 Tests durch:
-- Datenintegrität (Strings, lowercase, keine Duplikate, Größe 900–1200, kein Anglizismen, Kernvokabular)
+Test-Suites:
+- Datenintegrität (Strings, lowercase, keine Duplikate, Größe 1100–1200)
+- Kein Anglizismus, keine spielerklärbaren Wörter
+- Ergänzte Grundwörter vorhanden
 - Unicode-Umlaut-Normalisierung
-- Flexionsformen (Substantive, Verben, Adjektive)
-- Irreguläre Formen
+- Flexionsformen (Substantive, Verben, Adjektive, Irreguläre)
 - HTML-Escape-Funktion
-
-**Alle Tests müssen grün sein** bevor die Wortliste gepusht wird.
 
 ---
 
@@ -157,85 +127,56 @@ Dieser Test lädt `script.js` in einer VM, befüllt `wordSet` und führt 55 Test
 
 ### `umlautBack(s)` – Zeile 59 in script.js
 
-Normalisiert beide ASCII-Digraphen und Unicode-Umlaute:
 ```javascript
 function umlautBack(s) {
   return s
-    .replace(/ä/g,'a').replace(/ö/g,'o').replace(/ü/g,'u').replace(/ß/g,'s')  // Unicode
-    .replace(/ae/g,'a').replace(/oe/g,'o').replace(/ue/g,'u').replace(/ss/g,'s');  // ASCII
+    .replace(/ä/g,'a').replace(/ö/g,'o').replace(/ü/g,'u').replace(/ß/g,'s')  // Unicode zuerst!
+    .replace(/ae/g,'a').replace(/oe/g,'o').replace(/ue/g,'u').replace(/ss/g,'s');  // dann ASCII
 }
 ```
 
-Wichtig: Unicode-Normalisierungen müssen ZUERST erfolgen, sonst `ue→u` zerstört `ue` in `ü→u` Ketten.
-
-### `checkStem(stem)` – Zeile 60 in script.js
-
-Prüft, ob ein Stammwort erlaubt ist:
-1. Lemma direkt (`wordSet.has(stem)`)
-2. Mit Infinitiv-Endung (`stem + 'en'` oder `stem + 'n'`)
-3. Mit Umlaut-Normalisierung
+Wichtig: Unicode-Normalisierungen müssen ZUERST erfolgen.
 
 ### `isAllowed(rawWord)` – Zeile 73 in script.js
 
-Prüft ein Wort in dieser Reihenfolge:
 1. Lowercase konvertieren
-2. In `irregulars` Map nachschlagen (Präteritum, Partizipien irregulärer Verben)
+2. `irregulars` Map (Präteritum, Partizipien irregulärer Verben)
 3. Direkter Treffer in `wordSet`
-4. Suffix-Stripping: `suffixes` Array von lang zu kurz durchgehen, Stammwort prüfen
-5. `ge-`-Präfix entfernen (für Partizipien II: `gelacht` → `lacht`)
-6. Umlaut-Normalisierung: Wenn `umlautBack` eine Änderung bewirkt, final in `wordSet` prüfen
+4. Suffix-Stripping (`suffixes` Array, lang zu kurz)
+5. `ge-`-Präfix entfernen (Partizipien II)
+6. Umlaut-Normalisierung → final in `wordSet` prüfen
 
 ---
 
 ## Deployment
 
-Alle Änderungen in `words.json`:
-- Committen auf `main`
-- GitHub Actions deployt automatisch auf GitHub Pages
-- Live unter: https://kosmonautica.github.io/ThingExplainer/
+Push auf `main` → GitHub Actions → GitHub Pages (2–5 Min)
 
-**Schnell-Check nach Deploy**:
-1. https://kosmonautica.github.io/ThingExplainer/ öffnen
-2. Text eingeben, grün/rot-Markierung prüfen
-3. Wortliste-Button klicken, Suchfeld und A-Z-Navigation testen
+Live: https://kosmonautica.github.io/ThingExplainer/
+
+**Schnell-Check nach Deploy**: Anglizismus rot (computer), Grundwort grün (haus), Flexion grün (läuft).
 
 ---
 
 ## Häufige Fragen
 
-### Warum wird Wort X als rot markiert, obwohl es ganz einfach ist?
+**Warum ist Wort X rot, obwohl es einfach klingt?**
+Prüfen: Ist es ein Werkzeug zum Erklären (→ rein) oder selbst spielerklärbar (→ raus)? Falls echtes Lücke: manuell zu words.json hinzufügen.
 
-- Möglicherweise nicht in der Datenquelle (FrequencyWords) vertreten
-- Oder: Zu abstrakt, zu spezifisch, zu akademisch
-- Lösung: Manuell zu words.json hinzufügen, Tests laufen lassen, pushen
+**Warum werden nicht alle Flexionsformen erkannt?**
+Die `suffixes` Array deckt die häufigsten Endungen ab. Seltene Formen: Suffix ergänzen oder in `irregulars` eintragen.
 
-### Warum werden Plurale erkannt, aber nicht alle Formen?
-
-- Die `suffixes` Array deckt die häufigsten Endungen ab
-- Seltene Flexionen (z. B. Duale, veraltete Dative) könnten fehlschlagen
-- Lösung: Suffix zu Array hinzufügen oder Irregular-Form manuell mappen
-
-### Kann ich die Wortliste ins Englische/Französische portieren?
-
-- Nein – die `irregulars` Map und `suffixes` Array sind deutschsprachig
-- Für andere Sprachen: Neue irregulars und suffixes definieren, neue words.json
-- Das Suchfeld-System (Umlaut-Normalisierung etc.) ist sprachunabhängig
-
-### Kann ich Komposita-Stripping implementieren?
-
-- Nein, derzeit nicht im Scope
-- Würde erfordern: Komposita-Wörterbuch, komplexe Logik zur Stammzerlegung
-- Munroes Philosophie: Komposita sind legitime Konzepte (z. B. "Raumfahrt")
+**Portierung auf andere Sprachen?**
+Nicht direkt — `irregulars` und `suffixes` sind deutschsprachig. Neue Sprache = neue Map + neues Array + neue words.json.
 
 ---
 
 ## Quellen
 
-- Munroe, Randall (2015): *Thing Explainer*. Accessed via https://xkcd.com/thing-explainer/
+- Munroe, Randall (2015): *Thing Explainer*. https://xkcd.com/thing-explainer/
 - hermitdave (2018): *FrequencyWords* German corpus. https://github.com/hermitdave/FrequencyWords
-- Wiktionary German Morphology Reference: https://de.wiktionary.org/
-- Verein Deutsche Sprache – Anglizismen-Index (inoffiziell)
+- Wiktionary Morphologie-Referenz: https://de.wiktionary.org/
 
 ---
 
-**Letztes Update**: 2026-05-09 (v2.0 curated list, Unicode umlaut support in morphology)
+**Version**: 2.1 | **Letztes Update**: 2026-05-09

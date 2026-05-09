@@ -30,11 +30,12 @@ Kein Login, kein Server, kein Sync — laeuft komplett im Browser.
 
 ## Wortliste
 
-**1.098 deutsche Lemmas (Grundformen)** nach der Munroe-Philosophie:
+**1.119 deutsche Lemmas (Grundformen)** nach der Munroe-Philosophie:
 
 - **Häufigkeitsbasiert**: Aus Untertitel-Korpora (alltägliche, gesprochene Sprache)
 - **Keine Anglizismen**: Kein Computer, Internet, App, Team, Job, etc.
 - **Keine akademischen Begriffe**: Fokus auf Konkretheit (Haus, Farbe, Gefühl) statt Abstraktion (Kompetenz, Struktur, Prozess)
+- **Aufnahme-Kriterium**: Wörter rein wenn *Werkzeug zum Erklären*; raus wenn selbst spielerklärbar (hotel → "ein Haus wo man schläft und bezahlt")
 - **Inhalt**:
   - Funktionswörter, Pronomen, Präpositionen
   - Häufige Verben (inkl. Modalverben und Unregelmässige: gehen, sein, haben, kommen, etc.)

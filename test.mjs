@@ -62,8 +62,8 @@ describe('words.json – Datenintegrität', () => {
     assert.equal(new Set(words).size, words.length);
   });
 
-  test('Anzahl zwischen 900 und 1200 Wörtern', () => {
-    assert.ok(words.length >= 900 && words.length <= 1200, `Tatsächlich: ${words.length}`);
+  test('Anzahl zwischen 1100 und 1200 Wörtern', () => {
+    assert.ok(words.length >= 1100 && words.length <= 1200, `Tatsächlich: ${words.length}`);
   });
 
   test('Keine bekannten Anglizismen enthalten', () => {
@@ -82,6 +82,21 @@ describe('words.json – Datenintegrität', () => {
     const required = ['haus', 'gehen', 'rot', 'fünf', 'wasser', 'kind', 'mutter', 'vater', 'essen', 'schlafen'];
     const missing = required.filter(w => !words.includes(w));
     assert.deepEqual(missing, [], `Fehlende Grundwörter: ${missing.join(', ')}`);
+  });
+
+  test('Ergänzte Grundwörter vorhanden (Kategorie 1+2)', () => {
+    const required = [
+      'turm', 'boot', 'bauer', 'fahrer', 'richter', 'waffe', 'schild', 'pumpe', 'schalter', 'strom', 'hitze', 'kaelte',
+      'maschine', 'motor', 'musik', 'energie', 'gummi', 'sosse', 'essig', 'instrument', 'soldat',
+    ];
+    const missing = required.filter(w => !words.includes(w));
+    assert.deepEqual(missing, [], `Fehlende Ergänzungen: ${missing.join(', ')}`);
+  });
+
+  test('Spielerklärbare Wörter nicht enthalten (hotel, polizist, etc.)', () => {
+    const shouldBeExplained = ['hotel', 'restaurant', 'polizist', 'pilot', 'batterie', 'garage', 'tunnel', 'balkon', 'traktor'];
+    const found = shouldBeExplained.filter(w => words.includes(w));
+    assert.deepEqual(found, [], `Sollten nicht in der Liste sein: ${found.join(', ')}`);
   });
 });
 
