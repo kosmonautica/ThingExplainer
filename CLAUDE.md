@@ -63,6 +63,20 @@ words.json ist ein einfaches JSON-Array mit 1.126 Lemmas (Grundformen), Stand v3
 - **Automatisiert**: `node test.mjs` — 57 Tests (Datenintegrität, Morphologie, Unicode-Umlaute)
 - **Stresstest**: `node test.stress.mjs` — informativ; prueft ob 25 Spielbegriffe (klavier, hund, flugzeug…) sich mit der Wortliste in 1–3 Saetzen erklaeren lassen
 
+## Dokumentationspflicht bei Änderungen
+
+**WICHTIG**: Jede Änderung zieht die betroffenen Doku-Dateien automatisch mit. Kein Commit ohne entsprechende Aktualisierung.
+
+| Änderungsart | Zu aktualisierende Dateien |
+|---|---|
+| Wörter hinzugefügt / entfernt | `words.json`, `APP_VERSION` in `script.js`, `docs/WORTLISTE.md` (neue Versionssektion), `CLAUDE.md` (Lemmazahl + Version), `README.md` (Lemmazahl + Version) |
+| Neue App-Features | `requirements.md` (neue FR), `specs/001-*/spec.md` (neue User Story), `README.md` (Features-Liste), `docs/ENTWICKLUNG.md` |
+| Morphologie-Engine geändert | `docs/ENTWICKLUNG.md` (Zeilennummern, Funktionsbeschreibungen), `docs/WORTLISTE.md` (Morphologie-Abschnitt) |
+| Tests geändert | `docs/ENTWICKLUNG.md` (Testanzahl), `docs/KURZ-ANLEITUNG.md` (Testanzahl) |
+| Neue Version deployt | `APP_VERSION` in `script.js` hochzählen, neue Versionssektion in `docs/WORTLISTE.md`, Lemmazahl + Versionsstand in `CLAUDE.md` und `README.md`, **neue Versionsnummer im Chat nennen** |
+
+Nach jedem Merge: neue Versionsnummer im Chat mitteilen, damit sie manuell verifiziert werden kann.
+
 <!-- SPECKIT START -->
 For additional context about technologies to be used, project structure,
 shell commands, and other important information, read the current plan:

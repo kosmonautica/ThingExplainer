@@ -1,50 +1,42 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+# Thing Explainer Constitution
 
 ## Core Principles
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+### I. Vanilla Stack — keine Abhängigkeiten
+Keine Frameworks, keine Build-Tools, keine externen Bibliotheken. Jede Funktion muss in reinem Vanilla JS/HTML5/CSS3 lösbar sein. Neue npm-Pakete oder Build-Schritte sind nicht erlaubt.
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+### II. Statisch & Offline-First
+Die App muss vollständig statisch bleiben (FTP-deploybar) und nach dem ersten Laden offline funktionieren. Kein Backend, kein Server-Side Rendering, kein Sync zwischen Geräten.
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+### III. Mobile-First
+Alle Features werden zuerst für Smartphones (360–430 px) entworfen. Desktop ist Secondary. Jede UI-Änderung muss auf mobilem Viewport getestet werden.
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+### IV. Munroe-Philosophie (NON-NEGOTIABLE)
+Die Wortliste folgt dem Kategorie-Filter-Prinzip: Konkrete Tiere, Berufe, Geräte, Gebäudetypen, spezifisches Essen und Anglizismen sind grundsätzlich ausgeschlossen. Neue Wörter werden nur aufgenommen, wenn sie in mindestens zwei Quellen (Munroe-1000, DWDS-Kernwortschatz, de_50k.txt) als Erklär-Werkzeug auftauchen.
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+### V. Single Source of Truth für Version
+`APP_VERSION` in `script.js` Zeile 1 ist die einzige Stelle, an der die App-Version definiert wird. Bei jeder Veröffentlichung wird sie dort erhöht und automatisch in Header und Modal-Footer angezeigt.
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+### VI. Dokumentationspflicht bei jeder Änderung
+Jede Codeänderung zieht die betroffenen Doku-Dateien mit. Kein Commit ohne entsprechende Doku-Aktualisierung (siehe CLAUDE.md → Dokumentationspflicht).
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
+## Technische Constraints
 
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
+- **Sprache**: Deutsch (Wortliste, UI-Texte, Doku)
+- **Testing**: `node test.mjs` (57 blockierende Tests) muss immer grün sein. `node test.stress.mjs` informativ.
+- **Wortlistengröße**: 1.000–1.200 Lemmas (Zielkorridor)
+- **Performance**: DOM-Update < 100 ms, Suchfilter < 100 ms, A-Z-Sprung < 200 ms
 
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+## Deployment-Workflow
+
+1. Feature-Branch erstellen (`claude/<feature-name>`)
+2. Änderungen committen inkl. Doku
+3. PR erstellen, Tests prüfen, mergen
+4. GitHub Actions deployt automatisch auf GitHub Pages
+5. Neue Versionsnummer im Chat nennen
 
 ## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
+Diese Constitution hat Vorrang vor anderen Praktiken. Änderungen an der Wortlisten-Philosophie (Principle IV) erfordern eine neue Versionssektion in `docs/WORTLISTE.md`.
 
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+**Version**: 1.0 | **Ratified**: 2026-05-10 | **Last Amended**: 2026-05-10

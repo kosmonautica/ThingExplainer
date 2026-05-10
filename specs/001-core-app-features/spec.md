@@ -2,7 +2,7 @@
 
 **Feature Branch**: `001-core-app-features`  
 **Created**: 2026-05-09  
-**Status**: Draft  
+**Status**: Implemented (v3.1)  
 **Input**: Dokumentation der bestehenden Features der Thing Explainer PWA
 
 ---
@@ -137,6 +137,16 @@ Die App ist auf Smartphones komfortabel nutzbar: Das Textfeld ist gut erreichbar
 - **SC-004**: Alle Bedienelemente sind auf Smartphones mit Bildschirmbreiten ab 360 px ohne Zoomen oder horizontales Scrollen erreichbar.
 - **SC-005**: Die Wortliste öffnet sich und zeigt alle erlaubten Wörter in unter 500 Millisekunden.
 - **SC-006**: Die App ist als PWA installierbar (erfüllt Browser-Mindestanforderungen: Manifest + Service Worker).
+
+### User Story 6 – Versionsnummer sichtbar (Priority: P5)
+
+Die App zeigt ihre aktuelle Version sowohl im Header als auch im Wortlisten-Modal an, damit Nutzende nach einem Update erkennen können, welche Version sie verwenden.
+
+**Acceptance Scenarios**:
+
+1. **Given** die App ist geladen, **When** der Header sichtbar ist, **Then** ist neben dem Titel eine kleine Versionsnummer zu sehen (z. B. `v3.1`).
+2. **Given** das Wortlisten-Modal ist geöffnet, **When** es angezeigt wird, **Then** zeigt der Modal-Footer dieselbe Versionsnummer wie der Header.
+3. **Given** eine neue Version deployed wird, **When** `APP_VERSION` in `script.js` erhöht wird, **Then** aktualisieren sich beide Anzeigen ohne weitere Code-Änderungen.
 
 ---
 

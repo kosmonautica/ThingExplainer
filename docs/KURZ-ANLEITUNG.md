@@ -2,88 +2,80 @@
 
 ## Schnell-Links
 
-- 🎯 **Wort hinzufügen**: → `words.json` öffnen, eine Zeile `"neueswort"` hinzufügen
-- 🎯 **Wort entfernen**: → `words.json` öffnen, Zeile löschen
-- 🧪 **Testen**: → `node test.mjs` (lokal) oder Browser-Test (http://localhost:8000)
-- 📚 **Detailliert**: → `docs/WORTLISTE.md`
-- 🛠 **Technisch**: → `docs/ENTWICKLUNG.md`
+- **Wort hinzufügen**: → `words.json` öffnen, Lemma eintragen, Version erhöhen
+- **Wort entfernen**: → `words.json` öffnen, Zeile löschen, Version erhöhen
+- **Testen**: → `node test.mjs` (57 Tests) + Browser-Test
+- **Detailliert**: → `docs/WORTLISTE.md`
+- **Technisch**: → `docs/ENTWICKLUNG.md`
 
 ---
 
-## Wort hinzufügen (5 Min)
+## Wort hinzufügen
 
-1. **words.json öffnen**
-   ```bash
-   code words.json
-   # oder: Texteditor öffnen
-   ```
-
-2. **Lemma eintragen** (Grundform, lowercase)
+1. **words.json öffnen**, Lemma (Grundform, lowercase) hinzufügen:
    ```json
-   [
-     "haus",
-     "gehen",
-     "neueswort"  ← hier hinzufügen
-   ]
+   ["haus", "gehen", "neueswort"]
    ```
 
-3. **Testen** (lokal)
-   ```bash
-   python3 -m http.server
-   # Browser: http://localhost:8000
-   # Text eingeben, neues Wort sollte GRÜN sein
+2. **APP_VERSION erhöhen** — `script.js` Zeile 1:
+   ```js
+   const APP_VERSION = '3.2';  // ← hochzählen
    ```
 
-4. **Pushen**
+3. **Versionssektion in `docs/WORTLISTE.md` anlegen** (Datum, was geändert, neue Lemmazahl)
+
+4. **Lemmazahl aktualisieren** in `CLAUDE.md` und `README.md`
+
+5. **Testen**:
    ```bash
-   git add words.json
-   git commit -m "Wort 'neueswort' hinzugefügt"
-   git push
+   node test.mjs       # 57 Tests müssen GRÜN sein
+   node test.stress.mjs  # informativ: Spielbegriffe erklärbar?
+   python3 -m http.server  # Browser: neues Wort grün?
    ```
+
+6. **Pushen und neue Version im PR-Text nennen**
 
 ---
 
-## Wort entfernen (3 Min)
+## Wort entfernen
 
-1. **words.json öffnen**, Wort löschen
-2. **Testen**: Browser-Test, Wort sollte ROT sein
-3. **Pushen**: `git add words.json && git commit -m "..." && git push`
+1. `words.json` öffnen, Zeile löschen
+2. `APP_VERSION` erhöhen und Versionssektion in `WORTLISTE.md` anlegen
+3. `node test.mjs` — alle grün?
+4. Browser: Wort sollte jetzt ROT sein
+5. Pushen
 
 ---
 
 ## Häufige Fragen
 
-**F: Was wenn das Wort nicht erkannt wird, obwohl es in words.json steht?**  
-A: Prüfen Sie die Flexionsformen – möglicherweise ist der Suffix nicht abgedeckt. Siehe `docs/WORTLISTE.md` → Flexionsformen prüfen.
+**F: Was wenn das Wort nicht erkannt wird, obwohl es in words.json steht?**
+A: Flexionsformen prüfen — möglicherweise ist die Endung nicht im `suffixes`-Array. Siehe `docs/WORTLISTE.md` → Flexionsformen prüfen.
 
-**F: Kann ich mehrere Wörter auf einmal ändern?**  
-A: Ja – alle Einträge in `words.json` ändern, `node test.mjs` ausführen (alle Tests müssen grün sein), dann pushen.
-
-**F: Wo ist die Englische Version?**  
-A: Derzeit nur Deutsch. Für andere Sprachen: Neue `words.json`, neue `irregulars` Map, neue `suffixes` Array nötig.
-
-**F: Wie lange bis zum Live-Deploy?**  
+**F: Wie lange bis zum Live-Deploy?**
 A: Nach Push auf `main` → 2–5 Min (GitHub Actions) → https://kosmonautica.github.io/ThingExplainer/
+
+**F: Wo sehe ich die aktuelle Version der App?**
+A: Im Header neben dem Titel (`Thing Explainer v3.1`) und im Footer des Wortlisten-Modals.
 
 ---
 
 ## Test-Checkliste vor dem Push
 
 ```bash
-# 1. Automatisierte Tests laufen
+# 1. Automatisierte Tests
 node test.mjs
-# → Alle 55 Tests müssen GRÜN sein
+# → Alle 57 Tests müssen GRÜN sein
 
-# 2. Manueller Browser-Test
+# 2. Stresstest (informativ)
+node test.stress.mjs
+# → Bericht: wie viele Spielbegriffe erklärbar?
+
+# 3. Manueller Browser-Test
 python3 -m http.server
 # → http://localhost:8000
-# → Ein paar Wörter eingeben, grün/rot prüfen
-# → Wortliste-Modal öffnen, Suche testen
-
-# 3. Wenn alles OK:
-git add words.json
-git commit -m "Beschreibung der Änderung"
-git push
+# → Neues Wort grün, entferntes Wort rot
+# → Header und Modal-Footer zeigen neue Versionsnummer
 ```
 
 ---
@@ -94,10 +86,10 @@ Die App erkennt **automatisch**:
 - Plurale: `kinder` → `kind` ✓
 - Verben: `baute` → `bauen`, `gelacht` → `lachen` ✓
 - Adjektive: `größer` → `groß`, `roten` → `rot` ✓
-- Umlaute: `häuser` = `haeuser` = `hauser` ✓
-- Unregelmäßige Verben: `war` → `sein`, `ging` → `gehen` ✓
+- Umlaute: `häuser` = `haeuser` ✓
+- Unregelmäßige Verben: `war` → `sein`, `kann` → `können` ✓
 
-→ Siehe `docs/WORTLISTE.md` → **Morphologie-Engine**.
+→ Siehe `docs/WORTLISTE.md` → **Morphologie-Engine**
 
 ---
 

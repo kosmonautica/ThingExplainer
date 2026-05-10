@@ -14,57 +14,67 @@ python3 -m http.server
 **Vanilla Stack**: Keine Build-Tools, keine Frameworks, kein Backend.
 
 ```
-index.html        — HTML-Struktur + CSS Styles (inline)
-script.js         — Morphologie-Engine + UI-Event-Handler
-style.css         — CSS (externe Datei)
-words.json        — 1.098 deutsche Lemmas (JSON-Array)
+index.html        — HTML-Struktur
+script.js         — APP_VERSION + Morphologie-Engine + UI-Event-Handler
+style.css         — CSS
+words.json        — 1.126 deutsche Lemmas (JSON-Array, Stand v3.1)
 sw.js             — Service Worker (Offline-Support)
 manifest.json     — PWA-Manifest
-test.mjs          — Node.js Test-Suite (55 Tests)
+test.mjs          — Node.js Test-Suite (57 Tests, blockierend)
+test.stress.mjs   — Stresstest: 25 Spielbegriffe erklärbar? (informativ)
 ```
 
 ## Morphologie-Engine
 
-`script.js` enthält ein reines Funktions-System zur Wort-Validierung:
+`script.js` enthält ein reines Funktionssystem zur Wort-Validierung.
 
 ### Zentrale Funktionen
 
-**`umlautBack(s)`** – Zeile 59
-Normalisiert Umlaute (Unicode + ASCII):
+**`umlautBack(s)`** — Zeile 60
+Normalisiert Umlaute (Unicode zuerst, dann ASCII):
 ```js
-ä → a, ö → o, ü → u, ß → s
-ae → a, oe → o, ue → u, ss → s
+ä → a, ö → o, ü → u, ß → s   // Unicode
+ae → a, oe → o, ue → u, ss → s // ASCII
 ```
 
-**`checkStem(stem)`** – Zeile 60
+**`checkStem(stem)`** — Zeile 61
 Prüft, ob ein Stammwort erlaubt ist:
 1. Direkter Treffer: `wordSet.has(stem)`
 2. Mit Infinitiv: `wordSet.has(stem + 'en')` oder `+ 'n'`
 3. Mit Umlaut-Normalisierung
 
-**`isAllowed(rawWord)`** – Zeile 73
+**`isAllowed(rawWord)`** — Zeile 75
 Hauptfunktion zur Wort-Validierung:
 1. Zu Lowercase
 2. Suche in `irregulars` Map
 3. Direkter Treffer in `wordSet`
-4. Suffix-Stripping (8 Endungen ausprobieren)
-5. `ge-`-Präfix entfernen
+4. Suffix-Stripping (Suffixes von lang nach kurz)
+5. `ge-`-Präfix entfernen (Partizipien II)
 6. Umlaut-Normalisierung
 
-**Irregulars Map** – Zeile 6–57
-~300 Einträge für unregelmäßige Verben:
+**Irregulars Map** — Zeile 7–59
+~400 Einträge für unregelmäßige Verben, Schlüssel in ASCII und Unicode:
 ```js
-['war', 'sein'],
-['baute', 'bauen'],
-['ging', 'gehen'],
-...
+['war', 'sein'], ['wäre', 'sein'],
+['ging', 'gehen'], ['kann', 'können'], ...
 ```
 
-**Suffixes Array** – Zeile 58
-60+ häufige Endungen für Suffix-Stripping:
+**Suffixes Array** — Zeile 59
+60+ Endungen für Suffix-Stripping, sortiert von lang nach kurz:
 ```js
-['ung', 'en', 'te', 'lichen', 'lich', 'ig', 'er', 'e', 'n', ...]
+['ungsweise', 'ungen', 'ung', 'lichen', 'lich', ... 'en', 'er', 'e', 'n', 't']
 ```
+
+## Versionierung
+
+`APP_VERSION` in `script.js` Zeile 1 ist die einzige Quelle der Wahrheit.
+Beim Laden wird sie automatisch in `#appVersion` (Header) und `#wlVersion` (Modal-Footer) geschrieben.
+
+**Bei jeder Veröffentlichung:**
+1. `APP_VERSION` in `script.js` Zeile 1 erhöhen
+2. Neue Sektion in `docs/WORTLISTE.md` anlegen
+3. Lemmazahl in `CLAUDE.md` und `README.md` aktualisieren
+4. Im Chat die neue Versionsnummer nennen
 
 ## Testing
 
@@ -74,37 +84,33 @@ Hauptfunktion zur Wort-Validierung:
 node test.mjs
 ```
 
-**Test-Suites** (55 Tests):
+**Test-Suites** (57 Tests):
 1. **words.json – Datenintegrität** (7 Tests)
-   - Alle Einträge sind Strings, lowercase
-   - Keine Duplikate
-   - Größe 900–1.200 Wörter
-   - Keine bekannten Anglizismen
-   - Kernvokabular vorhanden
+   - Alle Einträge sind Strings, lowercase, keine Duplikate
+   - Größe 1.050–1.150 Wörter
+   - Keine bekannten Anglizismen, keine Spielbegriffe
+   - Munroe-Erklärwerkzeuge vorhanden
 
 2. **umlautBack – ASCII & Unicode** (14 Tests)
-   - ae/oe/ue/ss → a/o/u/s
-   - ä/ö/ü/ß → a/o/u/s
-   - Konsistenz zwischen Formen
 
-3. **isAllowed – Verschiedene Kategorien** (24 Tests)
-   - Direkte Treffer (haus, gehen, Computer)
-   - Substantiv-Flexionen (kinder, kindes, väter)
-   - Verb-Flexionen (baute, gelacht, läuft)
-   - Irreguläre Verben (ging, war, hatte, sah)
-   - Adjektiv-Flexionen (schneller, roten, große)
-   - Umlaut-Normalisierung (haeuser vs. häuser)
+3. **isAllowed – Flexionsformen** (30 Tests)
+   - Direkte Treffer, Substantivflexion, Verbflexion
+   - Irreguläre Verben, Adjektive, Umlaut-Normalisierung
 
 4. **escapeHtml** (6 Tests)
-   - HTML-Entities korrekt escaped
 
-**Test-Setup**:
-- Verwendet Node.js `vm` Module (createContext, Script)
-- DOM wird gemockt (minimal: document.getElementById, createElement, etc.)
-- `wordSet` wird manuell mit words.json befüllt
-- `script.js` wird in der VM ausgeführt
+**Test-Setup**: Node.js `vm` (createContext/Script), minimales DOM-Mock, `wordSet` manuell befüllt.
+**Voraussetzung**: Node.js 18+
 
-**Voraussetzung**: Node.js 18+ (wegen `node:test` built-in)
+### Stresstest (informativ)
+
+```bash
+node test.stress.mjs
+```
+
+Prüft, ob 25 typische Spielbegriffe (klavier, hund, flugzeug …) sich mit der aktuellen Wortliste in 1–3 Sätzen erklären lassen. Gibt aus, welche Wörter in den Beispielerklärungen fehlen. Nicht-blockierend, keine Assertions.
+
+**Aktuell: 24/25 voll erklärbar** (lehrer: Dativ-Plural `kindern` ist Suffix-Engine-Lücke).
 
 ### Manuell im Browser
 
@@ -114,100 +120,88 @@ python3 -m http.server
 ```
 
 **Checkliste**:
-- [ ] Text eingeben, grün/rot-Markierung erscheint in Echtzeit
-- [ ] Zähler (erlaubt / verboten) aktualisiert sich
-- [ ] Flexionsformen erkannt: "baute" grün, "größer" grün, "läuft" grün
-- [ ] Anglizismen rot: "computer", "internet", "app"
-- [ ] Abstrakte Wörter rot: "kompetenz", "gesellschaft"
-- [ ] Wortliste-Button öffnet Modal mit Fokus im Suchfeld
+- [ ] Text eingeben → grün/rot-Markierung in Echtzeit
+- [ ] Zähler aktualisiert sich korrekt
+- [ ] Header zeigt `Thing Explainer v3.1` (aktuelle Version)
+- [ ] Wortlisten-Modal öffnet mit Fokus im Suchfeld
+- [ ] Modal-Footer zeigt `v3.1` (identisch mit Header-Version)
 - [ ] Suchfeld filtert in Echtzeit (case-insensitiv, Umlaut-normalisiert)
-- [ ] A-Z-Leiste springt zu Buchstaben-Abschnitten
-- [ ] Inaktive Buchstaben (keine Treffer) sind ausgegraut
-- [ ] Wortzähler zeigt Gesamtzahl oder Trefferanzahl
-- [ ] App funktioniert offline (nach erstem Laden)
-- [ ] Mobile-Layout responsive (Portrait/Landscape)
+- [ ] A-Z-Leiste springt zu Buchstaben-Abschnitten, inaktive ausgegraut
+- [ ] Anglizismen rot: `computer`, `auto`; Grundwörter grün: `haus`, `rad`
+- [ ] Flexionen grün: `baute`, `läuft`, `kann`, `muss`, `hieß`
+- [ ] App offline nutzbar nach erstem Laden
+
+## Wortliste — Philosophie v3.0
+
+**Kategorie-Filter**: Konkrete Tiere, Berufe, Geräte, Gebäudetypen, spezifisches Essen → raus (Spielbegriffe). Erklär-Werkzeuge → rein.
+
+**Quellen-Stack**: Munroe-1000 + DWDS-Kernwortschatz + FrequencyWords de_50k.txt — jedes Wort muss in mindestens zwei Quellen vorkommen.
+
+Detaillierte Dokumentation: `docs/WORTLISTE.md`
 
 ## Wortliste ändern
 
-Siehe **`docs/WORTLISTE.md`** für:
-- Wörter hinzufügen / entfernen
-- Flexionsformen validieren
-- Anlauf-Probleme beheben
+Siehe `docs/WORTLISTE.md` und `docs/KURZ-ANLEITUNG.md`.
 
 ## Deployment
 
 ### Automatisch (GitHub Actions)
 
-Push zu `main` → GitHub Actions führt `.github/workflows/pages.yml` aus → Deploy zu GitHub Pages
+Push zu `main` → `.github/workflows/pages.yml` → GitHub Pages (2–5 Min)
 
 **Live URL**: https://kosmonautica.github.io/ThingExplainer/
 
 ### Manuell
 
-Falls GitHub Actions nicht verfügbar:
-1. Dateien hochladen: `index.html`, `style.css`, `script.js`, `words.json`, `manifest.json`, `sw.js`
-2. Per FTP zu GitHub Pages oder eigenem Hosting
+Dateien hochladen: `index.html`, `style.css`, `script.js`, `words.json`, `manifest.json`, `sw.js`
 
 ## Performance
 
-- **DOM-Update**: < 50 ms (bei 1.000 Wörtern)
-- **Suchfeld-Filter**: < 10 ms (Array.filter + includes)
-- **A-Z-Sprung**: < 200 ms (scrollIntoView mit smooth behavior)
+- **DOM-Update**: < 50 ms (bei ~1.000 Wörtern)
+- **Suchfeld-Filter**: < 10 ms
+- **A-Z-Sprung**: < 200 ms (scrollIntoView smooth)
 - **Service Worker**: Offline nach erstem Laden
 
 ## Browser-Support
 
 - **Desktop**: Chrome, Firefox, Safari (alle modernen Versionen)
 - **Mobile**: iOS Safari 12+, Android Chrome 60+
-- **PWA**: Installierbar auf iOS (Home Screen) und Android (Play Store Option)
+- **PWA**: Installierbar auf iOS und Android
 
 ## Troubleshooting
 
 ### Tests schlagen fehl
-```bash
-# Node.js Version prüfen (18+ erforderlich)
-node --version
 
-# Einzelnen Test debuggen
-node test.mjs | grep "failing"
+```bash
+node --version  # Node.js 18+ erforderlich
+node test.mjs 2>&1 | grep "fail"
 ```
 
 ### Wort wird nicht erkannt
-1. In `words.json` prüfen (muss Lemma sein)
-2. In `script.js` prüfen: Ist das Suffix in der `suffixes` Array?
-3. Irregular form? → In `irregulars` Map hinzufügen
-4. Umlaut-Problem? → `umlautBack()` Logik checken
 
-### Service Worker funktioniert nicht
-```bash
-# Im Browser: DevTools → Application → Service Workers
-# → Sollte registered + active sein
+1. In `words.json` prüfen (muss Lemma/Grundform sein)
+2. In `script.js`: Ist das Suffix in der `suffixes` Array?
+3. Irreguläre Form? → In `irregulars` Map hinzufügen
+4. Umlaut-Problem? → `umlautBack()` prüfen
 
-# Falls nicht: sw.js prüfen (Syntax-Fehler?)
-# Falls ja: Cache löschen → DevTools → Application → Storage → Clear
+### Service Worker
+
 ```
-
-### Layout-Probleme auf Mobil
-- Chrome DevTools: Toggle Device Toolbar (Ctrl+Shift+M)
-- Verschiedene Viewport-Größen testen (320px, 375px, 768px)
-- CSS `style.css` prüfen (Mobile-first Approach)
-
-## Code-Style
-
-- **Vanilla JS**: Keine externe Abhängigkeiten, keine Frameworks
-- **Funktional**: Pure Functions wo möglich (umlautBack, checkStem, isAllowed)
-- **Keine Kommentare**: Code ist selbsterklärend; nur komplexe Logik erklären
-- **Lowercase-only**: words.json, variable names (ausser Klassen)
+DevTools → Application → Service Workers → registered + active?
+Falls nicht: sw.js auf Syntax-Fehler prüfen.
+Cache löschen: DevTools → Application → Storage → Clear
+```
 
 ## Weitere Ressourcen
 
 - **Wortlisten-Philosophie & Wartung**: `docs/WORTLISTE.md`
-- **Spec Wortlisten-Erweiterung**: `specs/002-word-list-enhancement/spec.md`
+- **Kurz-Anleitung**: `docs/KURZ-ANLEITUNG.md`
 - **Anforderungen**: `requirements.md`
+- **Specs**: `specs/`
 - **Original-Inspiration**: https://xkcd.com/thing-explainer/
 
 ---
 
 **Kontakt / Issues**: https://github.com/kosmonautica/ThingExplainer/issues
 
-**Letztes Update**: 2026-05-09
+**Letztes Update**: 2026-05-10
