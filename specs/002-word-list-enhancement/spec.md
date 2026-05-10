@@ -2,7 +2,7 @@
 
 **Feature Branch**: `002-word-list-enhancement`  
 **Created**: 2026-05-09  
-**Status**: Draft  
+**Status**: Implemented (v3.1)  
 **Input**: Das Wortlisten-Modal erhält ein Suchfeld, eine A–Z-Navigation, Auto-Fokus beim Öffnen und eine Anzeige der Gesamtanzahl der erlaubten Wörter.
 
 ---
