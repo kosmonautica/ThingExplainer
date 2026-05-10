@@ -9,32 +9,37 @@
   <title>Thing Explainer</title>
   <link rel="stylesheet" href="style.css">
   <link rel="manifest" href="manifest.json">
+  <script>try{var l=localStorage.getItem('lang');if(l==='en'||l==='de')document.documentElement.lang=l;}catch(e){}</script>
 </head>
 <body>
   <header>
     <h1>Thing Explainer <span id="appVersion" class="app-version"></span></h1>
     <div class="counter">
-      <span class="count-ok" id="countOk">0</span> erlaubt
+      <span class="count-ok" id="countOk">0</span> <span data-i18n="counterAllowed">erlaubt</span>
       <span class="sep">&middot;</span>
-      <span class="count-bad" id="countBad">0</span> verboten
+      <span class="count-bad" id="countBad">0</span> <span data-i18n="counterForbidden">verboten</span>
     </div>
-    <button id="btnWordlist" class="btn-wordlist">Wortliste</button>
+    <div class="lang-toggle">
+      <button id="btnLangDe" class="lang-btn active">DE</button>
+      <button id="btnLangEn" class="lang-btn">EN</button>
+    </div>
+    <button id="btnWordlist" class="btn-wordlist" data-i18n="btnWordlist">Wortliste</button>
   </header>
   <main>
     <div class="editor-wrap">
       <div id="backdrop" aria-hidden="true"></div>
-      <textarea id="input" placeholder="Tippe deine Erklaerung hier ..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></textarea>
+      <textarea id="input" placeholder="Tippe deine Erklaerung hier ..." data-i18n-placeholder="placeholderInput" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></textarea>
     </div>
   </main>
   <div id="wordlistModal" hidden>
     <div class="modal-box">
       <div class="modal-header">
-        <span class="modal-title">Erlaubte Wörter</span>
+        <span class="modal-title" data-i18n="modalTitle">Erlaubte Wörter</span>
         <span id="wlCount" class="wl-count"></span>
-        <button id="closeWordlist" class="btn-close" aria-label="Schließen">✕</button>
+        <button id="closeWordlist" class="btn-close" aria-label="Schließen" data-i18n-aria-label="btnClose">✕</button>
       </div>
       <div class="modal-search">
-        <input type="search" id="wlSearch" placeholder="Suchen …" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+        <input type="search" id="wlSearch" placeholder="Suchen …" data-i18n-placeholder="placeholderSearch" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
       </div>
       <div id="wlAZ" class="wl-az"></div>
       <div id="wordlistContent" class="wordlist-content"></div>

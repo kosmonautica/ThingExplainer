@@ -6,7 +6,7 @@ Alle Anforderungen in requirements.md.
 
 ## Tech-Stack
 Vanilla JS ES6+, HTML5, CSS3. Keine Frameworks, keine Build-Tools.
-Daten: words.json (flaches JSON-Array von deutschen Lemma-Strings, lowercase).
+Daten: words.de.json (1.126 deutsche Lemmas) + words.en.json (953 englische Lemmas), flache JSON-Arrays, lowercase.
 
 ## Lokale Entwicklung
 ```
@@ -32,36 +32,48 @@ Manuell im Browser pruefen:
 GitHub Actions deployt automatisch bei jedem Push auf main.
 Workflow: .github/workflows/pages.yml
 
-Alternativ manuell per FTP: index.html, style.css, script.js, words.json, manifest.json, sw.js
+Alternativ manuell per FTP: index.html, style.css, script.js, words.de.json, words.en.json, manifest.json, sw.js
 
 ## Versionierung
-Die App-Version ist definiert als `APP_VERSION` in `script.js` Zeile 1. Sie ist die einzige Quelle der Wahrheit — Script setzt sie beim Laden in `#appVersion` (Header) und `#wlVersion` (Wortlisten-Modal-Footer). **Bei jeder Veröffentlichung (neue Wörter, neue Features) diese Zahl hochzählen und in `docs/WORTLISTE.md` eine neue Versionssektion anlegen.** Aktuelle Version: **3.1**
+Die App-Version ist definiert als `APP_VERSION` in `script.js` Zeile 1. Sie ist die einzige Quelle der Wahrheit — Script setzt sie beim Laden in `#appVersion` (Header) und `#wlVersion` (Wortlisten-Modal-Footer). **Bei jeder Veröffentlichung (neue Wörter, neue Features) diese Zahl hochzählen und in `docs/WORTLISTE.md` eine neue Versionssektion anlegen.** Aktuelle Version: **4.0**
 
 ## Wortliste
-words.json ist ein einfaches JSON-Array mit 1.126 Lemmas (Grundformen), Stand v3.1.
+words.de.json ist ein einfaches JSON-Array mit 1.126 deutschen Lemmas (Grundformen), Stand v4.0.
+words.en.json ist ein einfaches JSON-Array mit 953 englischen Lemmas (Grundformen), Stand v4.0.
 
-**Philosophie**: Munroes Simple English – Kategorie-Filter statt Wort-für-Wort: konkrete Tiere, Berufe, Geräte, Gebäudetypen und spezifisches Essen sind grundsätzlich raus (Spielbegriffe); Erklär-Werkzeuge (hammer, seil, ecke, wolke, klettern…) rein.
+**Philosophie**: Munroes Simple English – Kategorie-Filter statt Wort-für-Wort: konkrete Tiere, Berufe, Geräte, Gebäudetypen und spezifisches Essen sind grundsätzlich raus (Spielbegriffe); Erklär-Werkzeuge rein.
 
-**Quellen**: Munroe-1000 (Up-Goer-Five ins Deutsche) + DWDS-Kernwortschatz + FrequencyWords de_50k.txt — jedes Wort muss in mindestens zwei Quellen vorkommen.
+**Quellen DE**: Munroe-1000 (Up-Goer-Five ins Deutsche) + DWDS-Kernwortschatz + FrequencyWords de_50k.txt
+**Quellen EN**: Munroe-1000 (Original) + NGSL 2.0 + FrequencyWords en_50k.txt — jedes Wort muss in mindestens zwei Quellen vorkommen.
 
 **Aufnahme-Kriterium**: Wörter rein wenn sie *Werkzeug zum Erklären* sind. Wörter raus wenn sie selbst erklärt werden sollen (hotel, polizist, batterie...).
 
-**Wartung & Nachjustierung**: → siehe `docs/WORTLISTE.md`
+**Wartung & Nachjustierung**: → siehe `docs/WORTLISTE.md` (DE) und `docs/WORDLIST-EN.md` (EN)
 
-**Die `isAllowed`-Funktion** (script.js) prüft ein Wort in dieser Reihenfolge:
+**Die `isAllowed`-Funktion** (script.js) dispatcht auf `isAllowed_de` oder `isAllowed_en` je nach `currentLang`:
+
+DE prüft:
 1. Irregular-Tabelle (z.B. "war" → "sein")
 2. Direkter Treffer im wordSet
-3. Suffix-Stripping: Endung abschneiden, Stamm pruefen
-   - `checkStem` sucht auch nach `stem + "en"` und `stem + "n"` → erkennt Verbflexionen wenn Infinitiv in der Liste steht
-4. ge-Praefix (Partizipien II): `gelacht` → `lacht` → `lachen`
+3. Suffix-Stripping; `checkStem_de` sucht auch `stem + "en"` und `stem + "n"`
+4. ge-Praefix (Partizipien II): `gelacht` → `lachen`
 5. Umlaut-Normalisierung (ä→a, ö→o, ü→u, ß→s + ASCII ae/oe/ue/ss)
 
-**Neue Wörter hinzufuegen**: `words.json` öffnen, ein Lemma pro Zeile (lowercase), speichern. Flexionsformen werden automatisch erkannt.
+EN prüft:
+1. Kontraktionen-Map (`don't` → `do`, `i'm` → `be`, etc.)
+2. Irregular-Tabelle (`was` → `be`, `went` → `go`, etc.)
+3. Direkter Treffer im wordSet
+4. Possessiv-`'s` strippen (`water's` → `water`)
+5. Suffix-Stripping; `checkStem_en` prüft stem, stem+e, stem+y, Konsonanten-Dedopplung
+
+**Neue Wörter hinzufuegen**: `words.de.json` oder `words.en.json` öffnen, ein Lemma pro Zeile (lowercase), speichern.
 
 ## Testen
-- **Manuell**: `python3 -m http.server`, dann http://localhost:8000 — Text eingeben, gruen/rot Markierung pruefen
-- **Automatisiert**: `node test.mjs` — 57 Tests (Datenintegrität, Morphologie, Unicode-Umlaute)
-- **Stresstest**: `node test.stress.mjs` — informativ; prueft ob 25 Spielbegriffe (klavier, hund, flugzeug…) sich mit der Wortliste in 1–3 Saetzen erklaeren lassen
+- **Manuell**: `python3 -m http.server`, dann http://localhost:8000 — Text eingeben, DE/EN-Toggle testen
+- **Automatisiert DE**: `node test.mjs` — 57 Tests (Datenintegrität, Morphologie, Unicode-Umlaute)
+- **Automatisiert EN**: `node test.en.mjs` — 120 Tests (Datenintegrität, Irregulars, Suffix-Stripping, Kontraktionen)
+- **Stresstest DE**: `node test.stress.mjs` — informativ; 25 Spielbegriffe mit DE-Wortliste
+- **Stresstest EN**: `node test.stress.en.mjs` — informativ; 25 Spielbegriffe mit EN-Wortliste
 
 ## Dokumentationspflicht bei Änderungen
 
@@ -69,7 +81,8 @@ words.json ist ein einfaches JSON-Array mit 1.126 Lemmas (Grundformen), Stand v3
 
 | Änderungsart | Zu aktualisierende Dateien |
 |---|---|
-| Wörter hinzugefügt / entfernt | `words.json`, `APP_VERSION` in `script.js`, `docs/WORTLISTE.md` (neue Versionssektion), `CLAUDE.md` (Lemmazahl + Version), `README.md` (Lemmazahl + Version) |
+| Wörter hinzugefügt / entfernt (DE) | `words.de.json`, `APP_VERSION` in `script.js`, `docs/WORTLISTE.md` (neue Versionssektion), `CLAUDE.md` (Lemmazahl + Version), `README.md` (Lemmazahl + Version) |
+| Wörter hinzugefügt / entfernt (EN) | `words.en.json`, `APP_VERSION` in `script.js`, `docs/WORDLIST-EN.md` (neue Versionssektion), `CLAUDE.md` (Lemmazahl + Version), `README.md` (Lemmazahl + Version) |
 | Neue App-Features | `requirements.md` (neue FR), `specs/001-*/spec.md` (neue User Story), `README.md` (Features-Liste), `docs/ENTWICKLUNG.md` |
 | Morphologie-Engine geändert | `docs/ENTWICKLUNG.md` (Zeilennummern, Funktionsbeschreibungen), `docs/WORTLISTE.md` (Morphologie-Abschnitt) |
 | Tests geändert | `docs/ENTWICKLUNG.md` (Testanzahl), `docs/KURZ-ANLEITUNG.md` (Testanzahl) |
