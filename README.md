@@ -1,6 +1,6 @@
 # Thing Explainer
 
-Eine mobile-first PWA zum Erklaeren von Begriffen — ausschliesslich mit den haeufigsten deutschen Woertern.
+Eine mobile-first PWA zum Erklaeren von Begriffen — ausschliesslich mit den haeufigsten deutschen oder englischen Woertern.
 
 **Live:** https://kosmonautica.github.io/ThingExplainer/
 
@@ -25,12 +25,13 @@ Kein Login, kein Server, kein Sync — laeuft komplett im Browser.
 - Zaehler: wie viele Woerter erlaubt / verboten
 - Flektierte Formen werden erkannt ("baute", "laufend", "fester" etc.)
 - **Wortliste**-Button zeigt alle erlaubten Woerter
+- **DE/EN-Toggle** im Header — schaltet Sprache live um; Wahl wird gemerkt
 - Offline-faehig (Service Worker / PWA)
 - Installierbar auf iOS und Android
 
 ## Wortliste
 
-**1.126 deutsche Lemmas (Grundformen)** nach der Munroe-Philosophie (v3.1):
+**v4.0: 1.126 deutsche Lemmas** (`words.de.json`) + **953 englische Lemmas** (`words.en.json`) nach der Munroe-Philosophie:
 
 - **Kategorie-Filter**: Konkrete Tiere, Berufe, Geräte, Gebäudetypen und spezifisches Essen sind grundsätzlich raus — das sind Spielbegriffe, die umschrieben werden sollen
 - **Erklär-Werkzeuge rein**: hammer, seil, ecke, kreis, wolke, dampf, klettern, zahn, lunge — Wörter die man braucht um andere Dinge zu beschreiben
@@ -50,7 +51,7 @@ Kein Login, kein Server, kein Sync — laeuft komplett im Browser.
 - `größer` → `groß` ✓
 - `war` → `sein` ✓
 
-→ Detaillierte Dokumentation: **`docs/WORTLISTE.md`** (Entstehung, Wartung, Nachjustierung)
+→ Detaillierte Dokumentation: **`docs/WORTLISTE.md`** (DE) und **`docs/WORDLIST-EN.md`** (EN)
 
 ## Lokale Entwicklung
 

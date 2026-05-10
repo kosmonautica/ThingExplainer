@@ -6,7 +6,7 @@ import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 
 const __dir = dirname(fileURLToPath(import.meta.url));
-const words = JSON.parse(readFileSync(join(__dir, 'words.json'), 'utf8'));
+const words = JSON.parse(readFileSync(join(__dir, 'words.de.json'), 'utf8'));
 
 // Minimales DOM-Mock damit script.js geladen werden kann
 const el = () => ({
@@ -28,6 +28,8 @@ const sandbox = {
   document: {
     getElementById: () => el(),
     createElement: () => ({ ...el(), dataset: {}, className: '', appendChild: () => {} }),
+    querySelectorAll: () => [],
+    documentElement: { lang: 'de' },
   },
   navigator: { serviceWorker: { register: () => {} } },
   fetch: () => new Promise(() => {}), // nie auflösen – wordSet bleibt leer bis wir es manuell setzen

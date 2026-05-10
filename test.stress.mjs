@@ -3,7 +3,7 @@
 //
 // Nicht-blockierend: gibt Bericht aus, welche Wörter in den Beispiel-
 // Erklärungen NICHT erlaubt sind. Das sind Hinweise, welche Erklär-Wörter
-// noch in words.json gehören (oder welche Beispiel-Erklärungen umzu-
+// noch in words.de.json gehören (oder welche Beispiel-Erklärungen umzu-
 // formulieren sind).
 //
 // Bedienung: `node test.stress.mjs`
@@ -14,7 +14,7 @@ import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 
 const __dir = dirname(fileURLToPath(import.meta.url));
-const words = JSON.parse(readFileSync(join(__dir, 'words.json'), 'utf8'));
+const words = JSON.parse(readFileSync(join(__dir, 'words.de.json'), 'utf8'));
 
 const el = () => ({
   addEventListener: () => {}, appendChild: () => {}, scrollTop: 0, value: '',
@@ -27,6 +27,8 @@ const sandbox = {
   document: {
     getElementById: () => el(),
     createElement: () => ({ ...el(), dataset: {}, className: '', appendChild: () => {} }),
+    querySelectorAll: () => [],
+    documentElement: { lang: 'de' },
   },
   navigator: { serviceWorker: { register: () => {} } },
   fetch: () => new Promise(() => {}),
@@ -100,7 +102,7 @@ for (const b of berichte) console.log(b);
 console.log(`\n=== Ergebnis: ${voll_erklaerbar} von ${probes.length} Spielbegriffen voll erklärbar ===`);
 
 if (fehlende_woerter.size > 0) {
-  console.log('\n=== Häufig fehlende Wörter (Kandidaten für words.json) ===');
+  console.log('\n=== Häufig fehlende Wörter (Kandidaten für words.de.json) ===');
   const sortiert = [...fehlende_woerter.entries()].sort((a, b) => b[1] - a[1]);
   for (const [wort, anzahl] of sortiert) {
     console.log(`  ${anzahl}x  ${wort}`);

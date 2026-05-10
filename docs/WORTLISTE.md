@@ -159,11 +159,24 @@ Verifiziert für 25 typische Spielbegriffe (klavier, gitarre, flugzeug, pilot, p
 
 ---
 
+### Version 4.0 (2026-05-10) — Englische Version
+
+- **Datei-Rename**: `words.json` → `words.de.json` (Trennschärfe für Multi-Sprach-Setup)
+- **Neue Datei**: `words.en.json` mit 953 englischen Lemmas nach Munroe-Philosophie
+- **DE-Wortliste unverändert**: 1.126 Lemmas, identischer Inhalt wie v3.1
+- **EN-Wortliste**: Separate Dokumentation → `docs/WORDLIST-EN.md`
+- **Service Worker**: Cache-Bump v1→v2; beide JSON-Dateien precached
+- **APP_VERSION**: 3.1 → 4.0
+
+**Ergebnis DE**: 1.126 Lemmas (unverändert)
+
+---
+
 ## Wartung und Nachjustierung
 
 ### Wort hinzufügen
 
-1. `words.json` öffnen (JSON-Array von Strings, lowercase)
+1. `words.de.json` öffnen (JSON-Array von Strings, lowercase)
 2. Neues Lemma hinzufügen
 3. Prüfen: Ist es ein Werkzeug zum Erklären? Oder selbst erklärbar?
 4. `node test.mjs` ausführen — alle 57 Tests müssen grün sein
