@@ -1,4 +1,4 @@
-const APP_VERSION = '4.0';
+const APP_VERSION = '4.0.1';
 
 // === i18n: UI-Strings ===
 const i18n = {
