@@ -1,4 +1,4 @@
-const APP_VERSION = '4.0.1';
+const APP_VERSION = '4.1.0';
 
 // === i18n: UI-Strings ===
 const i18n = {
@@ -200,6 +200,10 @@ const irregulars_en = new Map([
   ['lent','lend'],['lends','lend'],['lending','lend'],
   ['fed','feed'],['feeds','feed'],['feeding','feed'],
   ['could','can'],['would','will'],['should','shall'],['might','may'],
+  ['cannot','can'],
+  // Irregular noun plurals
+  ['teeth','tooth'],['feet','foot'],['men','man'],['women','woman'],
+  ['mice','mouse'],['geese','goose'],['people','person'],
 ]);
 
 // === EN: Kontraktionen ===

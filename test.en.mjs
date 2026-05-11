@@ -64,8 +64,8 @@ describe('words.en.json – data integrity', () => {
     assert.equal(new Set(words).size, words.length);
   });
 
-  test('Count between 900 and 1100 words', () => {
-    assert.ok(words.length >= 900 && words.length <= 1100, `Actual: ${words.length}`);
+  test('Count between 1100 and 1400 words (v4.1 hybrid)', () => {
+    assert.ok(words.length >= 1100 && words.length <= 1400, `Actual: ${words.length}`);
   });
 
   test('ASCII-only (no umlauts or diacritics)', () => {
@@ -73,26 +73,31 @@ describe('words.en.json – data integrity', () => {
     assert.deepEqual(bad, [], `Non-ASCII entries: ${bad.join(', ')}`);
   });
 
-  test('No game terms (concrete animals)', () => {
-    const gameTerms = ['dog', 'cat', 'horse', 'cow', 'pig', 'sheep', 'bird', 'fish', 'whale'];
+  test('No game terms (rare animals)', () => {
+    // v4.1: common animals (dog, cat, horse, bird, fish) allowed per Munroe Top-1000.
+    // Only rarer animals stay out.
+    const gameTerms = ['cow', 'pig', 'sheep', 'whale', 'elephant', 'tiger', 'lion', 'rabbit'];
     const found = gameTerms.filter(w => words.includes(w));
     assert.deepEqual(found, [], `Found game terms: ${found.join(', ')}`);
   });
 
-  test('No game terms (concrete jobs)', () => {
-    const jobs = ['doctor', 'teacher', 'soldier', 'officer', 'nurse', 'pilot', 'driver'];
+  test('No game terms (specialised jobs)', () => {
+    // v4.1: doctor, teacher, soldier, driver allowed per Munroe.
+    const jobs = ['officer', 'nurse', 'pilot', 'lawyer', 'engineer', 'farmer'];
     const found = jobs.filter(w => words.includes(w));
     assert.deepEqual(found, [], `Found job terms: ${found.join(', ')}`);
   });
 
-  test('No game terms (concrete devices)', () => {
-    const devices = ['computer', 'television', 'telephone', 'camera', 'car', 'bicycle', 'airplane'];
+  test('No game terms (specialised devices)', () => {
+    // v4.1: car, bus, ship, train, truck, phone, computer, radio, camera, television allowed.
+    const devices = ['telephone', 'bicycle', 'airplane', 'helicopter', 'printer', 'fridge'];
     const found = devices.filter(w => words.includes(w));
     assert.deepEqual(found, [], `Found device terms: ${found.join(', ')}`);
   });
 
-  test('No game terms (building types)', () => {
-    const buildings = ['church', 'hotel', 'school', 'hospital', 'station', 'airport', 'factory'];
+  test('No game terms (specialised buildings)', () => {
+    // v4.1: church, hotel, school, hospital, station, house allowed.
+    const buildings = ['airport', 'factory', 'library', 'museum', 'theater', 'stadium'];
     const found = buildings.filter(w => words.includes(w));
     assert.deepEqual(found, [], `Found building terms: ${found.join(', ')}`);
   });
@@ -203,6 +208,11 @@ describe('isAllowed (EN) – irregular verbs', () => {
   test('"would" → will', () => assert.ok(fn('would')));
   test('"should" → shall', () => assert.ok(fn('should')));
   test('"might" → may', () => assert.ok(fn('might')));
+  test('"cannot" → can', () => assert.ok(fn('cannot')));
+  test('"teeth" → tooth (irregular plural)', () => assert.ok(fn('teeth')));
+  test('"feet" → foot (irregular plural)', () => assert.ok(fn('feet')));
+  test('"men" → man (irregular plural)', () => assert.ok(fn('men')));
+  test('"women" → woman (irregular plural)', () => assert.ok(fn('women')));
 });
 
 // ---------------------------------------------------------------------------
