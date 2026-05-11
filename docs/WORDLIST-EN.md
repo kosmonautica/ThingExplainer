@@ -81,6 +81,34 @@ The `isAllowed_en` function in `script.js` checks a word in this order:
 
 ## Version History
 
+### v4.1.0 (2026-05-11) — Hybrid expansion (Munroe Top-1000 + explanation tools)
+
+**1.242 lemmas** (+289 vs v4.0). User feedback after v4.0 release: common everyday words like `ship`, `dog`, `cat`, `school`, `hotel`, `doctor` were missing because the v4.0 category-filter ("game terms out, explanation tools only in") was too strict. Munroe's actual *Thing Explainer* / Up-Goer-Five list is the **1000 most common English words** — which includes everyday concrete nouns (animals, jobs, devices, buildings) because they're common.
+
+**Hybrid philosophy**: keep v4.0's explanation-tool vocabulary, but also include common everyday words that appear in Munroe's published list. Only the truly specialised game terms stay out (e.g. `helicopter`, `microwave`, `dentist`, `elephant`, `tiger`, `library`, `museum`).
+
+**Added** (289 words across categories):
+- Animals (common): animal, bird, cat, creature, dog, fish, horse
+- People/jobs: aunt, dad, doctor, driver, guard, husband, kid, neighbor, soldier, student, teacher, uncle, wife
+- Body: breast, cheek, forehead, throat, tooth
+- Devices/transport: bus, camera, car, computer, phone, photo, picture, radio, ship, shoe, television, train, truck, boat
+- Buildings/places: apartment, bathroom, bedroom, church, city, college, garden, hall, hallway, hospital, hotel, house, porch, school, station, store, town, village
+- Food/drink: beer, coffee, dinner, egg, food, tea, wine
+- Clothes/objects: card, chair, cigarette, clothes, coat, desk, dress, gift, gun, jacket, pants, plate, pocket, screen, shirt, suit, table, window
+- Everyday verbs/adjectives: admit, afraid, approach, asleep, attack, beautiful, belong, best, better, bore, bother, certainly, confuse, consider, dance, despite, disappear, easily, exactly, familiar, fear, finally, finish, hardly, hate, hurry, immediately, interest, joke, kiss, mostly, music, news, nice, okay, perfect, perhaps, please, prepare, pretend, pretty, promise, prove, quickly, quietly, really, recognize, refuse, remind, repeat, reply, reveal, rush, scared, search, sell, serious, settle, several, sick, simply, smell, smile, snap, softly, somehow, spin, spirit, stare, steal, story, suddenly, suppose, surprise, sweet, terrible, thank, tiny, tire, travel, trip, trouble, trust, twice, unless, upon, usual, visit, wash, wedding, wet, whatever, whisper, whole, wild, wish, wonder, worry, wrong, yeah, yell, yes
+- Function/abstract: actually, anymore, attention, business, case, certainly, course, couple, despite, dozen, exactly, expression, figure, fun, funny, game, history, human, job, music, news, party, perhaps, personal, position, party, situation, soul, spirit, story, study, stuff, study, suit, surprise, system
+
+**Removed**: none.
+
+**Morphology engine extended** (in `script.js`):
+- New irregulars: `teeth→tooth`, `feet→foot`, `men→man`, `women→woman`, `mice→mouse`, `geese→goose`, `people→person`
+- `cannot→can`
+
+**Tests**: `node test.en.mjs` — 125 tests (all passing); count corridor 1100–1400, game-term filter relaxed (only specialised animals/jobs/devices/buildings flagged).
+**Stress test**: 25/25 game terms fully explainable (up from 14/25 in v4.0).
+
+---
+
 ### v4.0 (2026-05-10) — Initial English list
 
 **953 lemmas.** First English word list for Thing Explainer.
