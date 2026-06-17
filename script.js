@@ -297,6 +297,7 @@ function render() {
   }
   backdrop.innerHTML = html + '\n';
   backdrop.scrollTop = input.scrollTop;
+  requestAnimationFrame(() => { backdrop.scrollTop = input.scrollTop; });
   countOk.textContent = ok;
   countBad.textContent = bad;
 }
