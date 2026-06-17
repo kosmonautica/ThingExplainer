@@ -64,8 +64,8 @@ describe('words.json – Datenintegrität', () => {
     assert.equal(new Set(words).size, words.length);
   });
 
-  test('Anzahl zwischen 1050 und 1150 Wörtern', () => {
-    assert.ok(words.length >= 1050 && words.length <= 1150, `Tatsächlich: ${words.length}`);
+  test('Anzahl zwischen 1100 und 1200 Wörtern', () => {
+    assert.ok(words.length >= 1100 && words.length <= 1200, `Tatsächlich: ${words.length}`);
   });
 
   test('Keine bekannten Anglizismen enthalten', () => {

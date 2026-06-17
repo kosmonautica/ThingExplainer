@@ -31,7 +31,7 @@ Kein Login, kein Server, kein Sync — laeuft komplett im Browser.
 
 ## Wortliste
 
-**v4.1.0: 1.126 deutsche Lemmas** (`words.de.json`) + **1.242 englische Lemmas** (`words.en.json`) nach der Munroe-Philosophie (EN als Hybrid aus Munroe Top-1000 + Erklär-Werkzeugen):
+**v4.2.0: 1.146 deutsche Lemmas** (`words.de.json`) + **1.242 englische Lemmas** (`words.en.json`) nach der Munroe-Philosophie (EN als Hybrid aus Munroe Top-1000 + Erklär-Werkzeugen):
 
 - **Kategorie-Filter**: Konkrete Tiere, Berufe, Geräte, Gebäudetypen und spezifisches Essen sind grundsätzlich raus — das sind Spielbegriffe, die umschrieben werden sollen
 - **Erklär-Werkzeuge rein**: hammer, seil, ecke, kreis, wolke, dampf, klettern, zahn, lunge — Wörter die man braucht um andere Dinge zu beschreiben

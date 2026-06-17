@@ -6,7 +6,7 @@ Alle Anforderungen in requirements.md.
 
 ## Tech-Stack
 Vanilla JS ES6+, HTML5, CSS3. Keine Frameworks, keine Build-Tools.
-Daten: words.de.json (1.126 deutsche Lemmas) + words.en.json (953 englische Lemmas), flache JSON-Arrays, lowercase.
+Daten: words.de.json (1.146 deutsche Lemmas) + words.en.json (1.242 englische Lemmas), flache JSON-Arrays, lowercase.
 
 ## Lokale Entwicklung
 ```
@@ -35,10 +35,10 @@ Workflow: .github/workflows/pages.yml
 Alternativ manuell per FTP: index.html, style.css, script.js, words.de.json, words.en.json, manifest.json, sw.js
 
 ## Versionierung
-Die App-Version ist definiert als `APP_VERSION` in `script.js` Zeile 1. Sie ist die einzige Quelle der Wahrheit — Script setzt sie beim Laden in `#appVersion` (Header) und `#wlVersion` (Wortlisten-Modal-Footer). **Bei jeder Veröffentlichung (neue Wörter, neue Features) diese Zahl hochzählen und in `docs/WORTLISTE.md` eine neue Versionssektion anlegen.** Aktuelle Version: **4.1.0**
+Die App-Version ist definiert als `APP_VERSION` in `script.js` Zeile 1. Sie ist die einzige Quelle der Wahrheit — Script setzt sie beim Laden in `#appVersion` (Header) und `#wlVersion` (Wortlisten-Modal-Footer). **Bei jeder Veröffentlichung (neue Wörter, neue Features) diese Zahl hochzählen und in `docs/WORTLISTE.md` eine neue Versionssektion anlegen.** Aktuelle Version: **4.2.0**
 
 ## Wortliste
-words.de.json ist ein einfaches JSON-Array mit 1.126 deutschen Lemmas (Grundformen), Stand v4.0.
+words.de.json ist ein einfaches JSON-Array mit 1.146 deutschen Lemmas (Grundformen), Stand v4.2.0.
 words.en.json ist ein einfaches JSON-Array mit 1.242 englischen Lemmas (Grundformen), Stand v4.1.0 (Hybrid: Munroe Top-1000 + Erklär-Werkzeuge).
 
 **Philosophie**: Munroes Simple English – Kategorie-Filter statt Wort-für-Wort: konkrete Tiere, Berufe, Geräte, Gebäudetypen und spezifisches Essen sind grundsätzlich raus (Spielbegriffe); Erklär-Werkzeuge rein.

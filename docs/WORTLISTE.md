@@ -172,6 +172,26 @@ Verifiziert für 25 typische Spielbegriffe (klavier, gitarre, flugzeug, pilot, p
 
 ---
 
+### Version 4.2.0 (2026-06-17) — 20 abstrakte Erklär-Werkzeuge
+
+Auf Nutzer-Feedback hin: einige Grundwörter aus dem Bereich Prozess, Ergebnis und Beziehung fehlten in v4.1. Diese Wörter sind reine *Werkzeuge zum Erklären* (keine Spielbegriffe) und tauchen ständig in Erklärungen auf.
+
+**Ergänzt (20)**:
+
+| Kategorie | Wörter |
+|---|---|
+| Prozess / Ablauf | `ergebnis`, `folge`, `versuch`, `ablauf`, `aufgabe`, `start`, `aktion` |
+| Denken / Zustand | `idee`, `zustand` |
+| Raum / Maß | `abstand`, `bereich`, `raum`, `länge`, `breite`, `dicke` |
+| Beziehung | `unterschied`, `vergleich`, `verbindung` |
+| Material / Sache | `gegenstand`, `material` |
+
+**Tests**: Korridor von 1050–1150 auf 1100–1200 angepasst (`test.mjs`).
+**Ergebnis DE**: 1.146 Lemmas.
+**EN-Wortliste unverändert**.
+
+---
+
 ## Wartung und Nachjustierung
 
 ### Wort hinzufügen
