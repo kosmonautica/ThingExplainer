@@ -307,7 +307,6 @@ input.addEventListener('scroll', () => { backdrop.scrollTop = input.scrollTop; }
 
 if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js');
 
-document.getElementById('appVersion').textContent = 'v' + APP_VERSION;
 document.getElementById('wlVersion').textContent = 'v' + APP_VERSION;
 (function() {
   const d = new Date(document.lastModified);
@@ -315,7 +314,7 @@ document.getElementById('wlVersion').textContent = 'v' + APP_VERSION;
     const pad = n => String(n).padStart(2, '0');
     document.getElementById('appDate').textContent =
       'Version: ' + d.getDate() + '.' + (d.getMonth()+1) + '.' + d.getFullYear() +
-      ', um ' + pad(d.getHours()) + ':' + pad(d.getMinutes()) + ' Uhr';
+      ', ' + pad(d.getHours()) + ':' + pad(d.getMinutes()) + ' Uhr';
   }
 })();
 
