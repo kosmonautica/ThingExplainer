@@ -150,6 +150,23 @@ Die App zeigt ihre aktuelle Version sowohl im Header als auch im Wortlisten-Moda
 
 ---
 
+### User Story 7 – Credits-Hinweis (Priority: P5)
+
+Die App stellt am unteren rechten Bildschirmrand einen dezenten „Credits"-Link bereit. Klick öffnet ein Modal mit einem kurzen englischen Attributionstext: Hinweis auf den Autor Udo Wiegärtner, die Mitwirkung von Claude Code, Inspiration durch Randall Munroes Buch *Thing Explainer*, sowie ein Verweis auf die Wortlisten-Dokumentation auf GitHub.
+
+**Why this priority**: Nicht spielrelevant, aber wichtig für faire Quellen-Nennung und Verlinkung der Doku — niedrigste Priorität, da rein informativ.
+
+**Independent Test**: Credits-Link sichtbar unten rechts; Klick öffnet Modal; Modal schließt per ✕ und Backdrop-Klick; GitHub-Link öffnet in neuem Tab.
+
+**Acceptance Scenarios**:
+
+1. **Given** die App ist geladen, **When** der untere rechte Bildschirmrand sichtbar ist, **Then** ist dort dezent ein „Credits"-Link zu sehen (klein, halbtransparent).
+2. **Given** der Credits-Link wird geklickt, **When** das Modal erscheint, **Then** zeigt es den englischen Attributionstext (Autor, Claude Code, Munroe, GitHub-Doku-Link).
+3. **Given** das Credits-Modal ist offen, **When** das ✕ oder der dunkle Hintergrund geklickt wird, **Then** schließt das Modal.
+4. **Given** das Credits-Modal ist offen, **When** der GitHub-Link geklickt wird, **Then** öffnet er in einem neuen Tab.
+
+---
+
 ## Assumptions
 
 - Zielgruppe sind erwachsene Spielende in einem Workshop-Umfeld, die Smartphones mit modernen Browsern verwenden.

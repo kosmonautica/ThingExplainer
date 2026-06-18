@@ -69,6 +69,17 @@ Thing Explainer ist eine mobile-first PWA inspiriert von Randall Munroes Buch *T
 - FOUC-Vermeidung: Inline-Skript im `<head>` setzt `<html lang>` direkt aus localStorage
 - Beide Wortlisten offline verfügbar (Service Worker precacht beide JSON-Dateien)
 
-## 7. Nicht im Scope
+## 7. Credits-Hinweis (v4.2.1)
+
+- Dezenter „Credits"-Link unten rechts am Bildschirmrand (fixiert, klein, halbtransparent)
+- Klick öffnet Modal mit englischem Attributionstext:
+  - Autor: Udo Wiegärtner, mit Hilfe von Claude Code
+  - Inspirations-Hinweis auf Randall Munroes Buch *Thing Explainer*
+  - Hinweis auf Munroes ~1000-Wort-Liste als Basis der EN-Version
+  - Verweis auf die Wortlisten-Dokumentation auf GitHub (`/tree/main/docs`)
+- Modal schließt per ✕-Button und per Klick auf Backdrop
+- Nur englischer Text — keine DE-Variante nötig
+
+## 8. Nicht im Scope
 
 Multiplayer, Sync, Timer, Punkte, KI-Prüfung, Dritte Sprache (FR/ES), Komposita-Zerlegung, URL-basierte Sprachauswahl
