@@ -26,12 +26,13 @@ Kein Login, kein Server, kein Sync — laeuft komplett im Browser.
 - Flektierte Formen werden erkannt ("baute", "laufend", "fester" etc.)
 - **Wortliste**-Button zeigt alle erlaubten Woerter
 - **DE/EN-Toggle** im Header — schaltet Sprache live um; Wahl wird gemerkt
+- **Credits**-Link unten rechts mit Attribution und Doku-Verweis
 - Offline-faehig (Service Worker / PWA)
 - Installierbar auf iOS und Android
 
 ## Wortliste
 
-**v4.2.0: 1.146 deutsche Lemmas** (`words.de.json`) + **1.242 englische Lemmas** (`words.en.json`) nach der Munroe-Philosophie (EN als Hybrid aus Munroe Top-1000 + Erklär-Werkzeugen):
+**v4.2.1: 1.146 deutsche Lemmas** (`words.de.json`) + **1.242 englische Lemmas** (`words.en.json`) nach der Munroe-Philosophie (EN als Hybrid aus Munroe Top-1000 + Erklär-Werkzeugen):
 
 - **Kategorie-Filter**: Konkrete Tiere, Berufe, Geräte, Gebäudetypen und spezifisches Essen sind grundsätzlich raus — das sind Spielbegriffe, die umschrieben werden sollen
 - **Erklär-Werkzeuge rein**: hammer, seil, ecke, kreis, wolke, dampf, klettern, zahn, lunge — Wörter die man braucht um andere Dinge zu beschreiben

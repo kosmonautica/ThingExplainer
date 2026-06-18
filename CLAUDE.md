@@ -27,6 +27,7 @@ Manuell im Browser pruefen:
 - Wortzaehler zeigt Gesamtzahl bzw. Trefferanzahl beim Filtern
 - Offline-Funktion nach erstem Laden (Service Worker)
 - Mobile-Layout passt sich an
+- Credits-Link unten rechts oeffnet Popup mit englischem Attributionstext und GitHub-Doku-Link
 
 ## Deployment
 GitHub Actions deployt automatisch bei jedem Push auf main.
@@ -35,10 +36,10 @@ Workflow: .github/workflows/pages.yml
 Alternativ manuell per FTP: index.html, style.css, script.js, words.de.json, words.en.json, manifest.json, sw.js
 
 ## Versionierung
-Die App-Version ist definiert als `APP_VERSION` in `script.js` Zeile 1. Sie ist die einzige Quelle der Wahrheit — Script setzt sie beim Laden in `#appVersion` (Header) und `#wlVersion` (Wortlisten-Modal-Footer). **Bei jeder Veröffentlichung (neue Wörter, neue Features) diese Zahl hochzählen und in `docs/WORTLISTE.md` eine neue Versionssektion anlegen.** Aktuelle Version: **4.2.0**
+Die App-Version ist definiert als `APP_VERSION` in `script.js` Zeile 1. Sie ist die einzige Quelle der Wahrheit — Script setzt sie beim Laden in `#wlVersion` (Wortlisten-Modal-Footer). Der Header zeigt zusätzlich ein automatisches Build-Datum aus `document.lastModified`. **Bei jeder Veröffentlichung (neue Wörter, neue Features) `APP_VERSION` hochzählen und in `docs/WORTLISTE.md` eine neue Versionssektion anlegen.** Aktuelle Version: **4.2.1**
 
 ## Wortliste
-words.de.json ist ein einfaches JSON-Array mit 1.146 deutschen Lemmas (Grundformen), Stand v4.2.0.
+words.de.json ist ein einfaches JSON-Array mit 1.146 deutschen Lemmas (Grundformen), Stand v4.2.1.
 words.en.json ist ein einfaches JSON-Array mit 1.242 englischen Lemmas (Grundformen), Stand v4.1.0 (Hybrid: Munroe Top-1000 + Erklär-Werkzeuge).
 
 **Philosophie**: Munroes Simple English – Kategorie-Filter statt Wort-für-Wort: konkrete Tiere, Berufe, Geräte, Gebäudetypen und spezifisches Essen sind grundsätzlich raus (Spielbegriffe); Erklär-Werkzeuge rein.

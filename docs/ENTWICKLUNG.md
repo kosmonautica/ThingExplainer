@@ -17,12 +17,12 @@ python3 -m http.server
 index.html          — HTML-Struktur mit data-i18n-Attributen und DE/EN-Toggle
 script.js           — APP_VERSION + i18n + DE/EN-Morphologie-Engines + UI-Event-Handler
 style.css           — CSS inkl. .lang-toggle Styling
-words.de.json       — 1.126 deutsche Lemmas (JSON-Array, Stand v4.0)
-words.en.json       — 953 englische Lemmas (JSON-Array, Stand v4.0)
-sw.js               — Service Worker (Offline-Support, Cache v2, beide Wortlisten)
+words.de.json       — 1.146 deutsche Lemmas (JSON-Array, Stand v4.2.1)
+words.en.json       — 1.242 englische Lemmas (JSON-Array, Stand v4.1.0)
+sw.js               — Service Worker (Offline-Support, Cache v4-2-1, beide Wortlisten)
 manifest.json       — PWA-Manifest (zweisprachige Description)
 test.mjs            — Node.js Test-Suite DE (57 Tests, blockierend)
-test.en.mjs         — Node.js Test-Suite EN (120 Tests, blockierend)
+test.en.mjs         — Node.js Test-Suite EN (125 Tests, blockierend)
 test.stress.mjs     — Stresstest DE: 25 Spielbegriffe erklärbar? (informativ)
 test.stress.en.mjs  — Stresstest EN: 25 Spielbegriffe erklärbar? (informativ)
 ```
@@ -87,7 +87,7 @@ Prüft, ob ein Stammwort erlaubt ist:
 ## Versionierung
 
 `APP_VERSION` in `script.js` Zeile 1 ist die einzige Quelle der Wahrheit.
-Beim Laden wird sie automatisch in `#appVersion` (Header) und `#wlVersion` (Modal-Footer) geschrieben.
+Beim Laden wird sie automatisch in `#wlVersion` (Modal-Footer) geschrieben. Der Header zeigt zusätzlich ein Build-Datum aus `document.lastModified` (Format: `Version: D.M.YYYY, HH:MM Uhr`).
 
 **Bei jeder Veröffentlichung:**
 1. `APP_VERSION` in `script.js` Zeile 1 erhöhen
@@ -101,16 +101,16 @@ Beim Laden wird sie automatisch in `#appVersion` (Header) und `#wlVersion` (Moda
 
 ```bash
 node test.mjs      # Deutsche Tests (57)
-node test.en.mjs   # Englische Tests (120)
+node test.en.mjs   # Englische Tests (125)
 ```
 
 **DE Test-Suites** (`test.mjs`, 57 Tests):
-1. **words.de.json – Datenintegrität** (7 Tests) — Strings, lowercase, keine Duplikate, 1.050–1.150 Wörter, keine Anglizismen, Munroe-Werkzeuge vorhanden
+1. **words.de.json – Datenintegrität** (7 Tests) — Strings, lowercase, keine Duplikate, 1.100–1.200 Wörter, keine Anglizismen, Munroe-Werkzeuge vorhanden
 2. **umlautBack – ASCII & Unicode** (14 Tests)
 3. **isAllowed – Flexionsformen** (30 Tests) — Direkte Treffer, Substantivflexion, Verbflexion, Irreguläre, Adjektive, Umlaut-Normalisierung
 4. **escapeHtml** (6 Tests)
 
-**EN Test-Suites** (`test.en.mjs`, 120 Tests):
+**EN Test-Suites** (`test.en.mjs`, 125 Tests):
 1. **words.en.json – data integrity** (10 Tests) — Strings, lowercase, keine Duplikate, 900–1.100 Wörter, ASCII-only, keine Spielbegriffe, Core-Vokabular, alle Irregular-Lemmas vorhanden
 2. **isAllowed (EN) – direct matches** (8 Tests)
 3. **isAllowed (EN) – irregular verbs** (46 Tests)
@@ -146,13 +146,13 @@ python3 -m http.server
 **Checkliste**:
 - [ ] Text eingeben → grün/rot-Markierung in Echtzeit
 - [ ] Zähler aktualisiert sich korrekt
-- [ ] Header zeigt `Thing Explainer v4.0` (aktuelle Version)
+- [ ] Header zeigt `Thing Explainer` mit Autor-Untertitel und Build-Datum
 - [ ] DE/EN-Toggle-Buttons sichtbar rechts neben „Wortliste"
 - [ ] EN-Klick: UI wechselt auf Englisch, Wortliste wird englisch, `<html lang="en">`
 - [ ] Reload nach EN-Klick: bleibt Englisch (localStorage-Persistenz)
 - [ ] DE-Klick: zurück zu Deutsch; Reload: bleibt Deutsch
 - [ ] Wortlisten-Modal öffnet mit Fokus im Suchfeld
-- [ ] Modal-Footer zeigt `v4.0` (identisch mit Header-Version)
+- [ ] Modal-Footer zeigt aktuelle Version (z. B. `v4.2.1`)
 - [ ] Suchfeld filtert in Echtzeit (case-insensitiv)
 - [ ] A-Z-Leiste springt zu Buchstaben-Abschnitten, inaktive ausgegraut
 - [ ] DE: Anglizismen rot: `computer`, `auto`; Grundwörter grün: `haus`, `rad`
@@ -160,6 +160,7 @@ python3 -m http.server
 - [ ] EN: `telephone` rot (Spielbegriff); `water`, `push`, `big` grün
 - [ ] EN: `running` grün (→ run), `was` grün (→ be), `don't` grün (→ do)
 - [ ] App offline nutzbar nach erstem Laden
+- [ ] Credits-Link unten rechts sichtbar; Klick öffnet Modal mit englischem Text und GitHub-Doku-Link (öffnet in neuem Tab)
 
 ## Wortliste — Philosophie v3.0
 
@@ -234,4 +235,4 @@ Cache löschen: DevTools → Application → Storage → Clear
 
 **Kontakt / Issues**: https://github.com/kosmonautica/ThingExplainer/issues
 
-**Letztes Update**: 2026-05-10
+**Letztes Update**: 2026-06-18 (v4.2.1)

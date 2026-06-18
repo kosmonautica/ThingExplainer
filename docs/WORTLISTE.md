@@ -192,6 +192,15 @@ Auf Nutzer-Feedback hin: einige Grundwörter aus dem Bereich Prozess, Ergebnis u
 
 ---
 
+### Version 4.2.1 (2026-06-18) — Credits-Link (kein Wortlisten-Update)
+
+Reines App-Feature, keine Änderung an `words.de.json` oder `words.en.json`. Dezenter „Credits"-Link unten rechts öffnet Popup-Modal mit englischem Attributionstext (Udo Wiegärtner / Claude Code / Randall Munroe) sowie Verweis auf die Wortlisten-Doku auf GitHub.
+
+**Wortliste DE/EN unverändert** (1.146 / 1.242 Lemmas).
+**Cache-Bump**: `thing-explainer-v4-2` → `thing-explainer-v4-2-1` (PWA-Force-Reload).
+
+---
+
 ## Wartung und Nachjustierung
 
 ### Wort hinzufügen
@@ -302,4 +311,4 @@ Nicht direkt — `irregulars` und `suffixes` sind deutschsprachig. Neue Sprache 
 
 ---
 
-**Version**: 3.0 | **Letztes Update**: 2026-05-09
+**Version**: 4.2.1 | **Letztes Update**: 2026-06-18
