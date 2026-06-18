@@ -1,4 +1,4 @@
-const APP_VERSION = '4.2.0';
+const APP_VERSION = '4.2.1';
 
 // === i18n: UI-Strings ===
 const i18n = {
@@ -370,6 +370,17 @@ document.getElementById('closeWordlist').addEventListener('click', () => {
   document.getElementById('wordlistModal').hidden = true;
 });
 document.getElementById('wordlistModal').addEventListener('click', e => {
+  if (e.target === e.currentTarget) e.currentTarget.hidden = true;
+});
+
+document.getElementById('btnCredits').addEventListener('click', e => {
+  e.preventDefault();
+  document.getElementById('creditsModal').hidden = false;
+});
+document.getElementById('closeCredits').addEventListener('click', () => {
+  document.getElementById('creditsModal').hidden = true;
+});
+document.getElementById('creditsModal').addEventListener('click', e => {
   if (e.target === e.currentTarget) e.currentTarget.hidden = true;
 });
 
