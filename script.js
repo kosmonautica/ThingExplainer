@@ -257,9 +257,9 @@ function isAllowed_en(rawWord) {
 }
 
 // === Polymorphic dispatch ===
-var currentLang = 'de';
-try { if (typeof localStorage !== 'undefined') currentLang = localStorage.getItem('lang') || 'de'; } catch (e) {}
-if (currentLang !== 'de' && currentLang !== 'en') currentLang = 'de';
+var currentLang = 'en';
+try { if (typeof localStorage !== 'undefined') currentLang = localStorage.getItem('lang') || 'en'; } catch (e) {}
+if (currentLang !== 'de' && currentLang !== 'en') currentLang = 'en';
 
 var wordSet = new Set();
 

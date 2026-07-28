@@ -25,7 +25,7 @@ Kein Login, kein Server, kein Sync — laeuft komplett im Browser.
 - Zaehler: wie viele Woerter erlaubt / verboten
 - Flektierte Formen werden erkannt ("baute", "laufend", "fester" etc.)
 - **Wortliste**-Button zeigt alle erlaubten Woerter
-- **DE/EN-Toggle** im Header — schaltet Sprache live um; Wahl wird gemerkt
+- **Sprachumschalter** im Header mit Flaggen-Emojis (🇩🇪 | 🇬🇧) — schaltet Sprache live um; Wahl wird gemerkt; Default: **Englisch**
 - **Credits**-Link unten rechts mit Attribution und Doku-Verweis
 - Offline-faehig (Service Worker / PWA)
 - Installierbar auf iOS und Android
