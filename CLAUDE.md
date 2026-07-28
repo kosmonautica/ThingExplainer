@@ -14,6 +14,11 @@ python3 -m http.server
 # dann http://localhost:8000
 ```
 
+## Sprachumschaltung
+- Sprachumschalter im Header oben rechts mit Flaggen-Emojis: 🇩🇪 (Deutsch) | 🇬🇧 (Englisch)
+- **Default beim ersten Laden: Englisch** (wird in localStorage gespeichert)
+- Sprachpräferenz persistent über localStorage
+
 ## Testen
 Manuell im Browser pruefen:
 - Gruen/rot-Markierung erscheint beim Tippen in Echtzeit
@@ -28,6 +33,7 @@ Manuell im Browser pruefen:
 - Offline-Funktion nach erstem Laden (Service Worker)
 - Mobile-Layout passt sich an
 - Credits-Link unten rechts oeffnet Popup mit englischem Attributionstext und GitHub-Doku-Link
+- Flaggen-Toggle funktioniert und setzt Default auf Englisch
 
 ## Deployment
 GitHub Actions deployt automatisch bei jedem Push auf main.

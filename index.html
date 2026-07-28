@@ -9,7 +9,7 @@
   <title>Thing Explainer</title>
   <link rel="stylesheet" href="style.css">
   <link rel="manifest" href="manifest.json">
-  <script>try{var l=localStorage.getItem('lang');if(l==='en'||l==='de')document.documentElement.lang=l;}catch(e){}</script>
+  <script>try{var l=localStorage.getItem('lang')||'en';if(l==='en'||l==='de')document.documentElement.lang=l;}catch(e){}</script>
 </head>
 <body>
   <header>
@@ -23,8 +23,8 @@
       <span class="count-bad" id="countBad">0</span> <span data-i18n="counterForbidden">verboten</span>
     </div>
     <div class="lang-toggle">
-      <button id="btnLangDe" class="lang-btn active">DE</button>
-      <button id="btnLangEn" class="lang-btn">EN</button>
+      <button id="btnLangDe" class="lang-btn" aria-label="Deutsch">🇩🇪</button>
+      <button id="btnLangEn" class="lang-btn active" aria-label="English">🇬🇧</button>
     </div>
     <button id="btnWordlist" class="btn-wordlist" data-i18n="btnWordlist">Wortliste</button>
   </header>
